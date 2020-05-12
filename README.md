@@ -1,4 +1,6 @@
-## 介绍
+## Zendea
+
+![Screenshot](http://static.zendea.com/zendea.jpg)
 
 `zendea`是一个使用Go语言开发的开源社区系统，采用前后端分离技术，Go语言提供api进行数据支撑，用户界面使用Nuxt.js进行渲染，后台界面基于element-ui。
 
