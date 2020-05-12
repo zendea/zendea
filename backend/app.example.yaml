@@ -1,0 +1,72 @@
+mode: release
+base:
+  port: 9527
+  url: https://zendea.com
+  static_path: /data/www
+
+database:
+  driver: mysql
+  mysql:
+    charset: utf8
+    host: 127.0.0.1:3306
+    name: zendea
+    user: root
+    password:
+    pool:
+      max: 20
+      min: 5
+    ssl: false
+  sqlite:
+    path: data/zendea.db
+
+jwt:
+  identity_key: zendea_id
+  key: secret key
+
+uploader:
+  enable: oss
+  oss:
+    host: 请配置成你自己的
+    bucket: 请配置成你自己的
+    endpoint: 请配置成你自己的
+    access_id: 请配置成你自己的
+    access_secret: 请配置成你自己的
+  local:
+    host: https://static.zendea.com/ # 上传文件域名
+    path: /data/www # 上传目录
+
+# github登录配置，回调地址：http://base.url/oauth/github/callback
+github:
+  client_id:
+  client_secret:
+
+# gitee登录配置，回调地址：http://base.url/oauth/gitee/callback
+gitee:
+  client_id:
+  client_secret:
+
+# qq登录配置，回调地址：http://base.url/oauth/qq/callback
+qq:
+  client_id:
+  client_secret:
+
+cors:
+  allow_credentials: false
+  allow_headers:
+  - '*'
+  allow_methods:
+  - GET
+  - POST
+  - OPTIONS
+  - PUT
+  - DELETE
+  allow_origins:
+  - '*'
+  enable: false
+  max_age: 7200
+smtp:
+  addr: smtp.qq.com
+  port: 25
+  username: 请配置成你自己的
+  password: 请配置成你自己的
+  ssl: true

@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /admin/
+Sitemap: https://zendea.com/sitemap/sitemap.xml
+Sitemap: https://zendea.com/sitemap/sitemap_archive.xml

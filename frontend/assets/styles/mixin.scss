@@ -1,0 +1,31 @@
+// 计算页面宽度
+@mixin main-size($side-width) {
+  // 侧边栏宽度
+  $sidebar-width: $side-width !global;
+  // 主栏目的宽度
+  $main-container-width: calc(
+    100% - #{$side-width} - #{$sidebar-margin}
+  ) !global;
+
+  &.left-main {
+    .left-container {
+      width: $main-container-width;
+    }
+
+    .right-container {
+      min-width: $sidebar-width;
+      max-width: $sidebar-width;
+    }
+  }
+
+  &.right-main {
+    .left-container {
+      min-width: $sidebar-width;
+      max-width: $sidebar-width;
+    }
+
+    .right-container {
+      width: $main-container-width;
+    }
+  }
+}

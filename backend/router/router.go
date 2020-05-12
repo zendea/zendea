@@ -1,0 +1,232 @@
+package router
+
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/appleboy/gin-jwt/v2"
+
+	"zendea/controller"
+	"zendea/controller/admin"
+	"zendea/middleware"
+)
+
+var jwtAuth *jwt.GinJWTMiddleware
+var jwtOAuth *jwt.GinJWTMiddleware
+
+// Setup setup
+func Setup(e *gin.Engine, cors bool) {
+	e.Use(
+		gin.Recovery(),
+	)
+	if cors {
+		e.Use(middleware.Cors())
+	}
+
+	// e.Use(middleware.CurrentUser)
+
+	//################################
+	//#                              #
+	//#             API              #
+	//#                              #
+	//################################
+	api := e.Group("/api")
+
+	// JWT
+	jwtAuth = middleware.JwtAuth(middleware.LoginStandard)
+	api.POST("/auth/login", jwtAuth.LoginHandler)
+	api.POST("/auth/login/refresh", jwtAuth.RefreshHandler)
+
+	jwtOAuth = middleware.JwtAuth(middleware.LoginOAuth)
+
+	oauthController := &controller.OAuthController{}
+	api.GET("/oauth/:provider/authorize", oauthController.Authorize)
+
+	api.GET("/oauth/:provider/callback", jwtOAuth.LoginHandler)
+
+	jwtApi := api.Group("/")
+	jwtApi.Use(jwtAuth.MiddlewareFunc(), middleware.CurrentUser)
+
+	// Configs
+	configController := &controller.ConfigController{}
+	api.GET("/config/configs", configController.List)
+
+	// Sections
+	sectionController := &controller.SectionController{}
+	api.GET("/sections", sectionController.List)
+
+	// Nodes
+	nodeController := &controller.NodeController{}
+	api.GET("/nodes", nodeController.List)
+	api.GET("/node/:id", nodeController.Show)
+
+	// Topics
+	topicController := &controller.TopicController{}
+	api.GET("/topics", topicController.List)
+	jwtApi.POST("/topics", topicController.Store)
+	api.GET("/topic/:id", topicController.Show)
+
+	api.GET("/topic/:id/edit", topicController.Edit)
+	api.PUT("/topic/:id", topicController.Update)
+
+	api.GET("/topics/node", topicController.GetNodeTopics)
+	api.GET("/topics/excellent", topicController.GetTopicsExcellent)
+	api.GET("/topics/recommend", topicController.GetTopicsRecommend)
+	api.GET("/topics/noreply", topicController.GetTopicsNoreply)
+	api.GET("/topics/last", topicController.GetTopicsLast)
+	api.GET("/topics/tag", topicController.GetTagTopics)
+	api.GET("/topics/user/recent/:id", topicController.GetUserRecent)
+	api.GET("/user/topics/:id", topicController.GetUserTopics)
+
+	api.GET("/topic/:id/recentlikes", topicController.GetRecentlikesBy)
+	jwtApi.POST("/topic/:id/like", middleware.SigninRequired, topicController.Like)
+	jwtApi.POST("/topic/:id/favorite", middleware.SigninRequired, topicController.Favorite)
+
+	// Comments
+	commentController := &controller.CommentController{}
+	api.GET("/comments", commentController.List)
+	jwtApi.POST("/comments", commentController.Create)
+
+	// Favorites
+	favoriteController := &controller.FavoriteController{}
+	api.GET("/favorites/favorited", favoriteController.GetFavorited)
+	api.DELETE("/favorite/delete", favoriteController.Delete)
+
+	// Tags
+	tagController := &controller.TagController{}
+	api.GET("/tag/:id", tagController.Show)
+	api.GET("/tags", tagController.List)
+	jwtApi.POST("/tag/autocomplete", tagController.Autocomplete)
+
+	// Articles
+	articleController := &controller.ArticleController{}
+	jwtApi.POST("/articles", articleController.Store)
+	api.GET("/articles", articleController.List)
+	api.GET("/article/:id", articleController.Show)
+	api.GET("/article/:id/edit", articleController.Edit)
+	jwtApi.PUT("/article/:id", articleController.Update)
+
+	api.GET("/articles/related/:id", articleController.GetRelatedBy)
+	api.GET("/articles/tag/:id", articleController.GetTagArticles)
+	api.GET("/articles/user/newest/:id", articleController.GetUserNewestBy)
+
+	api.GET("/articles/recent", articleController.GetRecent)
+	api.GET("/articles/user/recent/:id", articleController.GetUserRecent)
+	api.GET("/user/articles/:id", articleController.GetUserArticles)
+
+	// Users
+	userController := &controller.UserController{}
+	api.GET("/profile/:id", userController.Show)
+	jwtApi.PUT("/users/:id", userController.Update)
+	jwtApi.GET("/user/current", userController.GetCurrent)
+	api.GET("/user/score/rank", userController.GetScoreRank)
+	jwtApi.GET("/user/notifications/recent", userController.GetNotificationsRecent)
+	jwtApi.GET("/user/notifications", userController.GetNotifications)
+	jwtApi.GET("/user/favorites", userController.GetFavorites)
+
+	jwtApi.PUT("/user/update/avatar", userController.UpdateAvatar)
+	jwtApi.PUT("/user/set/username", userController.SetUsername)
+	jwtApi.PUT("/user/set/email", userController.SetEmail)
+	jwtApi.PUT("/user/set/password", userController.SetPassword)
+	jwtApi.PUT("/user/change/password", userController.ChangePassword)
+
+	// Auth
+	authController := &controller.AuthController{}
+	api.POST("/auth/signup", authController.Signup)
+
+	// Links
+	linkController := &controller.LinkController{}
+	api.GET("/links/top", linkController.GetToplinks)
+	api.GET("/links", linkController.List)
+
+	// Captcha
+	captchaController := &controller.CaptchaController{}
+	api.GET("/captcha/request", captchaController.GetRequest)
+	api.GET("/captcha/show/:captchaId", captchaController.Show)
+
+	// Upload
+	uploadController := &controller.UploadController{}
+	jwtApi.POST("/upload", uploadController.Upload)
+	jwtApi.POST("/upload/editor", uploadController.UploadFromEditor)
+	jwtApi.POST("/upload/fetch", uploadController.UploadFromURL)
+
+	//################################
+	//#                              #
+	//#          Admin API           #
+	//#                              #
+	//################################
+	adminAPI := jwtApi.Group("/admin")
+	adminAPI.Use(middleware.AdminRequired())
+
+	// Dashboard
+	dashboardController := &admin.DashboardController{}
+	adminAPI.GET("/dashboard/systeminfo", dashboardController.Systeminfo)
+
+	// Section
+	adminSectionController := &admin.SectionController{}
+	adminAPI.GET("/sections", adminSectionController.List)
+	adminAPI.GET("/sections/:id", adminSectionController.Show)
+	adminAPI.POST("/sections", adminSectionController.Store)
+	adminAPI.PUT("/sections/:id", adminSectionController.Update)
+	adminAPI.DELETE("/sections/:id", adminSectionController.Delete)
+	adminAPI.GET("/sections/:id/nodes", adminSectionController.Nodes)
+
+	// Node
+	adminNodeController := &admin.NodeController{}
+	adminAPI.GET("/nodes", adminNodeController.List)
+	adminAPI.GET("/nodes/:id", adminNodeController.Show)
+	adminAPI.POST("/nodes", adminNodeController.Store)
+	adminAPI.PUT("/nodes/:id", adminNodeController.Update)
+	adminAPI.DELETE("/nodes/:id", adminNodeController.Delete)
+
+	// Topic
+	adminTopicController := &admin.TopicController{}
+	adminAPI.GET("/topics", adminTopicController.List)
+	adminAPI.GET("/topics/:id", adminTopicController.Show)
+	adminAPI.PUT("/topics/:id", adminTopicController.Update)
+	adminAPI.DELETE("/topics/:id", adminTopicController.Delete)
+	adminAPI.POST("/topics/:id/recommend", adminTopicController.Recommend)
+	adminAPI.POST("/topics/:id/unrecommend", adminTopicController.Unrecommend)
+	adminAPI.POST("/topics/:id/undelete", adminTopicController.Undelete)
+
+	// Article
+	adminArticleController := &admin.ArticleController{}
+	adminAPI.GET("/articles", adminArticleController.List)
+	adminAPI.GET("/articles/:id", adminArticleController.Show)
+	adminAPI.PUT("/articles/:id", adminArticleController.Update)
+	adminAPI.DELETE("/articles/:id", adminArticleController.Delete)
+
+	// Comment
+	adminCommentController := &admin.CommentController{}
+	adminAPI.GET("/comments", adminCommentController.List)
+	adminAPI.GET("/comments/:id", adminCommentController.Show)
+	adminAPI.PUT("/comments/:id", adminCommentController.Update)
+	adminAPI.DELETE("/comments/:id", adminCommentController.Delete)
+
+	// User
+	adminUserController := &admin.UserController{}
+	adminAPI.GET("/users", adminUserController.List)
+	adminAPI.GET("/users/:id", adminUserController.Show)
+	adminAPI.POST("/users", adminUserController.Store)
+	adminAPI.PUT("/users/:id", adminUserController.Update)
+	adminAPI.DELETE("/users/:id", adminUserController.Delete)
+
+	adminUserScoreController := &admin.UserScoreController{}
+	adminAPI.GET("/user-scores", adminUserScoreController.List)
+	adminAPI.GET("/user-scores/:id", adminUserScoreController.Show)
+
+	adminUserScoreLogController := &admin.UserScoreLogController{}
+	adminAPI.GET("/user-score-logs", adminUserScoreLogController.List)
+	adminAPI.GET("/user-score-logs/:id", adminUserScoreLogController.Show)
+
+	// Link
+	adminLinkController := &admin.LinkController{}
+	adminAPI.GET("/links", adminLinkController.List)
+	adminAPI.GET("/links/:id", adminLinkController.Show)
+	adminAPI.POST("/links", adminLinkController.Store)
+	adminAPI.PUT("/links/:id", adminLinkController.Update)
+	adminAPI.DELETE("/links/:id", adminLinkController.Delete)
+
+	// Settings
+	adminSettingController := &admin.SettingController{}
+	adminAPI.GET("/settings", adminSettingController.List)
+	adminAPI.POST("/settings", adminSettingController.Store)
+}

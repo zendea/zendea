@@ -1,0 +1,38 @@
+.navbar {
+  border-bottom: 1px solid #e7edf3;
+
+  .brand {
+    font-size: 40px;
+    line-height: 40px;
+    color: #356dd0;
+  }
+  .navbar-item.is-active {
+    color: #3273dc;
+    border-bottom: 2px solid #3273dc;
+  }
+
+  .searchFormDiv {
+    @media screen and (max-width: 768px) {
+      & {
+        display: none;
+      }
+    }
+
+    #searchForm {
+      .input {
+        box-shadow: none;
+        border-radius: 2px;
+        background-color: #fff;
+        transition: all 0.4s;
+        float: right;
+        position: relative;
+
+        &:focus {
+          background-color: #fff;
+          border-color: #e7672e;
+          outline: none;
+        }
+      }
+    }
+  }
+}
