@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"zendea/builder"
-	"zendea/service"
+	"zendea/cache"
 )
 
 type SectionController struct {
@@ -12,6 +12,8 @@ type SectionController struct {
 }
 
 func (c *SectionController) List(ctx *gin.Context) {
-	sections := service.SectionService.GetSections()
+	//sections := service.SectionService.GetSections()
+	sections := cache.SectionCache.GetAll()
+
 	c.Success(ctx, builder.BuildSections(sections))
 }

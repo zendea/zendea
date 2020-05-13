@@ -192,7 +192,7 @@ func BuildSection(section *model.Section) *model.SectionResponse {
 	rsp.SectionId = section.ID
 	rsp.Name = section.Name
 
-	nodes := service.SectionService.GetSectionNodes(section.ID)
+	nodes := cache.SectionCache.GetSectionNodes(section.ID)
 	rsp.Nodes = BuildNodes(nodes)
 
 	return rsp

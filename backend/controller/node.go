@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"zendea/builder"
+	"zendea/cache"
 	"zendea/service"
 	"zendea/form"
 )
@@ -14,7 +15,8 @@ type NodeController struct {
 
 // List 节点列表
 func (c *NodeController) List(ctx *gin.Context) {
-	nodes := service.NodeService.GetNodes()
+	nodes := cache.NodeCache.GetAll()
+
 	c.Success(ctx, builder.BuildNodes(nodes))
 }
 
