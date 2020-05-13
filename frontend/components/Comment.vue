@@ -186,7 +186,7 @@ export default {
           content: this.content,
           quoteId: this.quote ? this.quote.commentId : ''
         })
-        this.$refs.commentsLoadMore.unshiftResults(data)
+        this.$refs.commentsLoadMore.pushResults(data)
         this.content = ''
         this.$refs.mdEditor.clear()
         this.quote = null

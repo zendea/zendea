@@ -143,10 +143,10 @@ func (s *commentService) GetComments(entityType string, entityId int64, cursor i
 		Eq("entity_type", entityType).
 		Eq("entity_id", entityId).
 		Eq("status", model.StatusOk).
-		Desc("id").Limit(50)
+		Asc("id").Limit(50)
 
 	if cursor > 0 {
-		cnd.Lt("id", cursor)
+		cnd.Gt("id", cursor)
 	}
 	comments = dao.CommentDao.Find(cnd)
 	if len(comments) > 0 {
