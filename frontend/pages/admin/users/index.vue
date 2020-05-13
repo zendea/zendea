@@ -178,24 +178,6 @@
             <el-option :key="1" :value="10" label="管理员"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="角色" prop="roles">
-          <el-select
-            v-model="editForm.roles"
-            multiple
-            filterable
-            allow-create
-            default-first-option
-            placeholder="用户角色"
-            style="width: 100%"
-          >
-            <el-option
-              v-for="item in editForm.roles"
-              :key="item"
-              :label="item"
-              :value="item"
-            ></el-option>
-          </el-select>
-        </el-form-item>
 
         <el-form-item label="密码" prop="password">
           <el-input
