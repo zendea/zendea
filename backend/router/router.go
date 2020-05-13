@@ -64,8 +64,8 @@ func Setup(e *gin.Engine, cors bool) {
 	jwtApi.POST("/topics", topicController.Store)
 	api.GET("/topic/:id", topicController.Show)
 
-	api.GET("/topic/:id/edit", topicController.Edit)
-	api.PUT("/topic/:id", topicController.Update)
+	jwtApi.GET("/topic/:id/edit", topicController.Edit)
+	jwtApi.PUT("/topic/:id", topicController.Update)
 
 	api.GET("/topics/node", topicController.GetNodeTopics)
 	api.GET("/topics/excellent", topicController.GetTopicsExcellent)

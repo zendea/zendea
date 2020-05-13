@@ -48,10 +48,6 @@ func (c *TopicController) List(ctx *gin.Context) {
 // Store 发表帖子
 func (c *TopicController) Store(ctx *gin.Context) {
 	user := c.GetCurrentUser(ctx)
-	if user == nil {
-		c.Fail(ctx, util.ErrorNotLogin)
-		return
-	}
 	var topicForm form.TopicCreateForm
 	if c.BindAndValidate(ctx, &topicForm) {
 		topicForm.UserID = user.ID
@@ -67,11 +63,6 @@ func (c *TopicController) Store(ctx *gin.Context) {
 // Edit 为编辑话题准备数据
 func (c *TopicController) Edit(ctx *gin.Context) {
 	user := c.GetCurrentUser(ctx)
-	if user == nil {
-		c.Fail(ctx, util.ErrorNotLogin)
-		return
-	}
-
 	var gDto form.GeneralGetDto
 	if c.BindAndValidate(ctx, &gDto) {
 		topic := service.TopicService.Get(gDto.ID)
@@ -105,10 +96,6 @@ func (c *TopicController) Edit(ctx *gin.Context) {
 // Update 更新话题
 func (c *TopicController) Update(ctx *gin.Context) {
 	user := c.GetCurrentUser(ctx)
-	if user == nil {
-		c.Fail(ctx, util.ErrorNotLogin)
-		return
-	}
 	var gDto form.GeneralGetDto
 	if !c.BindAndValidate(ctx, &gDto) {
 		c.Fail(ctx, util.ErrorTopicNotFound)
