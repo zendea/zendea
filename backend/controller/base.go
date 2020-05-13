@@ -40,16 +40,6 @@ func (c *BaseController) Success(ctx *gin.Context, data interface{}) {
 	})
 }
 
-// Success output json data
-func (c *BaseController) Success2(ctx *gin.Context, data interface{}) {
-	ctx.IndentedJSON(http.StatusOK, gin.H{
-		"code":    200,
-		"success": true,
-		"message": "ok",
-		"data":    data,
-	})
-}
-
 // Fail output error
 func (c *BaseController) Fail(ctx *gin.Context, error *util.CodeError) {
 	ctx.AbortWithStatusJSON(http.StatusOK, gin.H{

@@ -20,11 +20,13 @@ type UserController struct {
 // GetCurrent get current user
 func (c *UserController) GetCurrent(ctx *gin.Context) {
 	user := c.GetCurrentUser(ctx)
-	if user != nil {
-		c.Success2(ctx, builder.BuildUser(user))
-		return
-	}
-	c.Success2(ctx, nil)
+
+	ctx.IndentedJSON(200, gin.H{
+		"code":    200,
+		"success": true,
+		"message": "ok",
+		"data":    builder.BuildUser(user),
+	})
 }
 
 // 用户详情
