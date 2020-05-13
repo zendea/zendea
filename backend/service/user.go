@@ -193,29 +193,6 @@ func (s *userService) Create(username, email, nickname, password, rePassword str
 	return user, nil
 }
 
-// Verify 登录
-func (s *userService) Verify(username, password string) (*model.User, error) {
-	if len(username) == 0 {
-		return nil, errors.New("用户名/邮箱不能为空")
-	}
-	if len(password) == 0 {
-		return nil, errors.New("密码不能为空")
-	}
-	var user *model.User = nil
-	if err := util.IsValidateEmail(username); err == nil { // 如果用户输入的是邮箱
-		user = s.GetByEmail(username)
-	} else {
-		user = s.GetByUsername(username)
-	}
-	if user == nil || user.Status != model.StatusOk {
-		return nil, errors.New("用户不存在或被禁用")
-	}
-	if !util.ValidatePassword(user.Password, password) {
-		return nil, errors.New("密码错误")
-	}
-	return user, nil
-}
-
 // SignInByLoginSource 第三方账号登录
 func (s *userService) SignInByLoginSource(loginSource *model.LoginSource) (*model.User, error) {
 	user := s.Get(loginSource.UserID.Int64)
@@ -417,7 +394,13 @@ var (
 
 // VerifyAndReturnUserInfo - login and return user info
 func (s *userService) VerifyAndReturnUserInfo(username, password string) (bool, error, model.User) {
-	userModel := dao.UserDao.GetByUsername(username)
+	var userModel *model.User = nil
+	if err := util.IsValidateEmail(username); err == nil { // 如果用户输入的是邮箱
+		userModel = s.GetByEmail(username)
+	} else {
+		userModel = s.GetByUsername(username)
+	}
+
 	if userModel == nil {
 		return false, errInvalidAccount, model.User{}
 	} 
