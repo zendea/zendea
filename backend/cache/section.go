@@ -42,7 +42,7 @@ func newSectionCache() *sectionCache {
 		),
 		sectionNodesCache: cache.NewLoadingCache(
 			func(key cache.Key) (value cache.Value, e error) {
-				value = dao.NodeDao.Find(sqlcnd.NewSqlCnd().Where("section_id = ?", key2Int64(key)).Asc("sort_no").Desc("id"))
+				value = dao.NodeDao.Find(sqlcnd.NewSqlCnd().Eq("section_id", key2Int64(key)).Eq("status", model.StatusOk).Asc("sort_no").Desc("id"))
 				return
 			},
 			cache.WithMaximumSize(1000),
