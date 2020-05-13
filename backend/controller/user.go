@@ -78,6 +78,22 @@ func (c *UserController) GetScoreRank(ctx *gin.Context) {
 	c.Success(ctx, results)
 }
 
+// GetScorelogs 用户积分记录
+func (c *UserController) GetScorelogs(ctx *gin.Context) {
+	page := form.FormValueIntDefault(ctx, "page", 1)
+	user := c.GetCurrentUser(ctx)
+
+
+	logs, paging := service.UserScoreLogService.List(sqlcnd.NewSqlCnd().
+		Eq("user_id", user.ID).
+		Page(page, 20).Desc("id"))
+
+	c.Success(ctx, gin.H{
+		"results": logs,
+		"paging": paging,
+	})
+}
+
 // GetNotificationsRecent 获取最近3条未读消息
 func (c *UserController) GetNotificationsRecent(ctx *gin.Context) {
 	user := c.GetCurrentUser(ctx)
