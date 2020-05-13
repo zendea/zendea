@@ -18,14 +18,16 @@ export const actions = {
     console.log(token)
     this.$cookies.set('jwt', token, { maxAge: 86400 * 7, path: '/' })
     context.commit('setUserJwt', token)
-    context.commit('setCurrentUser', user)
   },
 
   // 获取当前登录用户
   async getCurrentUser(context) {
-    const user = await this.$axios.get('/api/user/current')
-    context.commit('setCurrentUser', user)
-    return user
+    const ret = await this.$axios.get('/api/user/current')
+    if (ret.success) {
+      const user = ret.data
+      context.commit('setCurrentUser', user)
+      return user
+    }
   },
 
   // 登录
@@ -36,7 +38,11 @@ export const actions = {
       username,
       password
     })
-    context.dispatch('loginSuccess', ret)
+    if (ret.success === true) {
+      context.dispatch('loginSuccess', ret.data)
+    } else {
+      throw ret
+    }
   },
 
   // github登录
@@ -47,8 +53,11 @@ export const actions = {
         state
       }
     })
-    context.dispatch('loginSuccess', ret)
-    return ret.user
+    if (ret.success === true) {
+      context.dispatch('loginSuccess', ret.data)
+    } else {
+      throw ret
+    }
   },
 
   // github登录
@@ -59,8 +68,11 @@ export const actions = {
         state
       }
     })
-    context.dispatch('loginSuccess', ret)
-    return ret.user
+    if (ret.success === true) {
+      context.dispatch('loginSuccess', ret.data)
+    } else {
+      throw ret
+    }
   },
 
   // qq登录
@@ -71,8 +83,11 @@ export const actions = {
         state
       }
     })
-    context.dispatch('loginSuccess', ret)
-    return ret.user
+    if (ret.success === true) {
+      context.dispatch('loginSuccess', ret.data)
+    } else {
+      throw ret
+    }
   },
 
   // 注册

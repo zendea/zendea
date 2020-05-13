@@ -21,10 +21,10 @@ type UserController struct {
 func (c *UserController) GetCurrent(ctx *gin.Context) {
 	user := c.GetCurrentUser(ctx)
 	if user != nil {
-		c.Success(ctx, builder.BuildUser(user))
+		c.Success2(ctx, builder.BuildUser(user))
 		return
 	}
-	c.Success(ctx, nil)
+	c.Success2(ctx, nil)
 }
 
 // 用户详情

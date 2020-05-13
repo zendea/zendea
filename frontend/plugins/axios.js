@@ -21,8 +21,10 @@ export default function({ $axios, $toast, app }) {
       return Promise.reject(response)
     }
     const jsonResult = response.data
-    if (jsonResult.code === 0 || jsonResult.code === 200) {
+    if (jsonResult.code === 0) {
       return Promise.resolve(jsonResult.data)
+    } else if (jsonResult.code === 200) {
+      return Promise.resolve(jsonResult)
     } else {
       return Promise.reject(jsonResult)
     }

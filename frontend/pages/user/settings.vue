@@ -390,7 +390,8 @@ export default {
     UserCenterSidebar
   },
   async asyncData({ $axios, params }) {
-    const user = await $axios.get('/api/user/current')
+    const ret = await $axios.get('/api/user/current')
+    const user = ret.data
     const form = { ...user }
     return {
       user,
@@ -523,7 +524,8 @@ export default {
       }
     },
     async reload() {
-      this.user = await this.$axios.get('/api/user/current')
+      const ret = await this.$axios.get('/api/user/current')
+      this.user = ret.data
       this.form = { ...this.user }
     }
   },

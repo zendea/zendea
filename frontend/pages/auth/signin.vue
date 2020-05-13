@@ -159,9 +159,6 @@ export default {
           password: this.password,
           ref: this.ref
         })
-
-        console.log(this.ref)
-
         this.$toast.success('登录成功。', {
           duration: 1000,
           onComplete() {
