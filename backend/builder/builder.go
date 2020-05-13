@@ -296,7 +296,7 @@ func BuildSimpleTopic(topic *model.Topic) *model.TopicSimpleResponse {
 	}
 
 	if topic.NodeId > 0 {
-		node := service.NodeService.Get(topic.NodeId)
+		node := cache.NodeCache.Get(topic.NodeId)
 		rsp.Node = BuildNode(node)
 	}
 
