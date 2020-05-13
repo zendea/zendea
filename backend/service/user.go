@@ -112,16 +112,6 @@ func (s *userService) Scan(cb ScanUserCallback) {
 	}
 }
 
-// GetByEmail 根据邮箱查找
-func (s *userService) GetByEmail(email string) *model.User {
-	return dao.UserDao.GetByEmail(email)
-}
-
-// GetByUsername 根据用户名查找
-func (s *userService) GetByUsername(username string) *model.User {
-	return dao.UserDao.GetByUsername(username)
-}
-
 // Create 注册
 func (s *userService) Create(username, email, nickname, password, rePassword string) (*model.User, error) {
 	username = strings.TrimSpace(username)
@@ -144,7 +134,7 @@ func (s *userService) Create(username, email, nickname, password, rePassword str
 		if err := util.IsValidateEmail(email); err != nil {
 			return nil, err
 		}
-		if s.GetByEmail(email) != nil {
+		if dao.UserDao.GetByEmail(email) != nil {
 			return nil, errors.New("邮箱：" + email + " 已被占用")
 		}
 	} else {
@@ -269,12 +259,12 @@ func (s *userService) isEmailExists(email string) bool {
 	if len(email) == 0 { // 如果邮箱为空，那么就认为是不存在
 		return false
 	}
-	return s.GetByEmail(email) != nil
+	return dao.UserDao.GetByEmail(email) != nil
 }
 
 // isUsernameExists 用户名是否存在
 func (s *userService) isUsernameExists(username string) bool {
-	return s.GetByUsername(username) != nil
+	return dao.UserDao.GetByUsername(username) != nil
 }
 
 // SetAvatar 更新头像
@@ -396,9 +386,9 @@ var (
 func (s *userService) VerifyAndReturnUserInfo(username, password string) (bool, error, model.User) {
 	var userModel *model.User = nil
 	if err := util.IsValidateEmail(username); err == nil { // 如果用户输入的是邮箱
-		userModel = s.GetByEmail(username)
+		userModel = dao.UserDao.GetByEmail(username)
 	} else {
-		userModel = s.GetByUsername(username)
+		userModel = dao.UserDao.GetByUsername(username)
 	}
 
 	if userModel == nil {
