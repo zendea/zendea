@@ -65,7 +65,9 @@
           </div>
         </div>
       </div>
-      <user-center-sidebar :user="currentUser" />
+      <div class="right-container">
+        <user-center-sidebar :user="currentUser" />
+      </div>
     </div>
   </section>
 </template>

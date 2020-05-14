@@ -153,6 +153,66 @@ func (c *UserController) GetFavorites(ctx *gin.Context) {
 	})
 }
 
+// GetRecentWatchers 关注该用户的人
+func (c *UserController) GetRecentWatchers(ctx *gin.Context) {
+	var gDto form.GeneralGetDto
+	if c.BindAndValidate(ctx, &gDto) {
+		userWatchers := service.UserWatchService.Recent(gDto.ID, 10)
+		var users []model.UserInfo
+		for _, userWatcher := range userWatchers {
+			userInfo := builder.BuildUserById(userWatcher.WatcherID)
+			if userInfo != nil {
+				users = append(users, *userInfo)
+			}
+		}
+		c.Success(ctx, users)
+	}
+}
+
+// Watch 关注
+func (c *UserController) Watch(ctx *gin.Context) {
+	user := c.GetCurrentUser(ctx)
+	var gDto form.GeneralGetDto
+	if c.BindAndValidate(ctx, &gDto) {
+		err := service.UserWatchService.Watch(gDto.ID, user.ID)
+		if err != nil {
+			c.Fail(ctx, util.FromError(err))
+			return
+		}
+		c.Success(ctx, nil)
+	}
+}
+
+// GetWatched 是否关注了
+func (c *UserController) GetWatched(ctx *gin.Context) {
+	user := c.GetCurrentUser(ctx)
+
+	userID := form.FormValueInt64Default(ctx, "userId", 0)
+
+	data := map[string]interface{}{}
+	if user == nil || userID <= 0 {
+		data["watched"] = false
+	} else {
+		tmp := service.UserWatchService.GetBy(userID, user.ID)
+		data["watched"] = tmp != nil
+	}
+	c.Success(ctx, data)
+}
+
+
+// Delete 取消收藏
+func (c *UserController) WatchDelete(ctx *gin.Context) {
+	user := c.GetCurrentUser(ctx)
+
+	userID := form.FormValueInt64Default(ctx, "userId", 0)
+
+	tmp := service.UserWatchService.GetBy(userID, user.ID)
+	if tmp != nil {
+		service.UserWatchService.Delete(tmp.ID)
+	}
+	c.Success(ctx, nil)
+}
+
 // UpdateAvatar 修改头像
 func (c *UserController) UpdateAvatar(ctx *gin.Context) {
 	user := c.GetCurrentUser(ctx)

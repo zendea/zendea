@@ -187,7 +187,9 @@
           </div>
         </div>
       </div>
-      <user-center-sidebar :user="user" />
+      <div class="right-container">
+        <user-center-sidebar :user="user" />
+      </div>
     </div>
 
     <!-- 设置用户名 -->

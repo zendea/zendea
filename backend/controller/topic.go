@@ -125,8 +125,8 @@ func (c *TopicController) Update(ctx *gin.Context) {
 	}
 }
 
-// GetRecentlikesBy 点赞用户
-func (c *TopicController) GetRecentlikesBy(ctx *gin.Context) {
+// GetRecentLikes 点赞用户
+func (c *TopicController) GetRecentLikes(ctx *gin.Context) {
 	var gDto form.GeneralGetDto
 	if c.BindAndValidate(ctx, &gDto) {
 		topicLikes := service.TopicLikeService.Recent(gDto.ID, 10)

@@ -30,6 +30,14 @@ type UserScore struct {
 	UpdateTime int64 `json:"updateTime" form:"updateTime"`                // 更新时间
 }
 
+// 用户关注
+type UserWatch struct {
+	Model
+	UserID     int64 `gorm:"not null;index:idx_user_watch_user_id;" json:"userId" form:"userId"`          // 用户
+	WatcherID  int64 `gorm:"not null;index:idx_user_watch_watcher_id;" json:"watcherId" form:"watcherId"` // 关注者编号
+	CreateTime int64 `json:"createTime" form:"createTime"`                                                // 创建时间
+}
+
 // 用户积分流水
 type UserScoreLog struct {
 	Model

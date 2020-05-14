@@ -1,39 +1,37 @@
 <template>
-  <div class="right-container">
-    <div class="widget">
-      <div class="widget-header">{{ user.username }} ({{ user.nickname }})</div>
-      <div class="widget-content">
-        <img
-          v-if="user.avatar"
-          v-lazy="user.avatar"
-          class="img-avatar avatar-5000"
-        />
-        <avatar v-else :username="user.username" :size="50" />
-        <div v-if="user.description" class="description">
-          <p>{{ user.description }}</p>
-        </div>
-        <div class="score">
-          <i class="iconfont icon-dollar" />
-          <span>{{ user.score }}</span>
-          <a v-if="isOwner" class="score-log" href="/user/scores"
-            >积分明细&gt;&gt;</a
-          >
-        </div>
-        <ul v-if="isOwner" class="operations">
-          <li>
-            <i class="iconfont icon-edit" />
-            <a href="/user/settings">编辑资料</a>
-          </li>
-          <li>
-            <i class="iconfont icon-message" />
-            <a href="/user/notifications">动态</a>
-          </li>
-          <li>
-            <i class="iconfont icon-favorite" />
-            <a href="/user/favorites">收藏</a>
-          </li>
-        </ul>
+  <div class="widget">
+    <div class="widget-header">{{ user.username }} ({{ user.nickname }})</div>
+    <div class="widget-content">
+      <img
+        v-if="user.avatar"
+        v-lazy="user.avatar"
+        class="img-avatar avatar-5000"
+      />
+      <avatar v-else :username="user.username" :size="50" />
+      <div v-if="user.description" class="description">
+        <p>{{ user.description }}</p>
       </div>
+      <div class="score">
+        <i class="iconfont icon-dollar" />
+        <span>{{ user.score }}</span>
+        <a v-if="isOwner" class="score-log" href="/user/scores"
+          >积分明细&gt;&gt;</a
+        >
+      </div>
+      <ul v-if="isOwner" class="operations">
+        <li>
+          <i class="iconfont icon-edit" />
+          <a href="/user/settings">编辑资料</a>
+        </li>
+        <li>
+          <i class="iconfont icon-message" />
+          <a href="/user/notifications">动态</a>
+        </li>
+        <li>
+          <i class="iconfont icon-favorite" />
+          <a href="/user/favorites">收藏</a>
+        </li>
+      </ul>
     </div>
   </div>
 </template>

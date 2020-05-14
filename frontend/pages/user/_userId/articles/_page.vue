@@ -22,7 +22,9 @@
           :url-prefix="'/user/' + user.id + '/articles/'"
         />
       </div>
-      <user-center-sidebar :user="user" />
+      <div class="right-container">
+        <user-center-sidebar :user="user" />
+      </div>
     </div>
   </section>
 </template>

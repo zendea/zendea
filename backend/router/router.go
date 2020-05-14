@@ -76,7 +76,7 @@ func Setup(e *gin.Engine, cors bool) {
 	api.GET("/topics/user/recent/:id", topicController.GetUserRecent)
 	api.GET("/user/topics/:id", topicController.GetUserTopics)
 
-	api.GET("/topic/:id/recentlikes", topicController.GetRecentlikesBy)
+	api.GET("/topic/:id/recentlikes", topicController.GetRecentLikes)
 	jwtApi.POST("/topic/:id/like", topicController.Like)
 	jwtApi.POST("/topic/:id/favorite", topicController.Favorite)
 
@@ -129,6 +129,11 @@ func Setup(e *gin.Engine, cors bool) {
 	jwtApi.PUT("/user/set/email", userController.SetEmail)
 	jwtApi.PUT("/user/set/password", userController.SetPassword)
 	jwtApi.PUT("/user/change/password", userController.ChangePassword)
+
+	api.GET("/users/:id/recentwatchers", userController.GetRecentWatchers)
+	jwtApi.POST("/users/:id/watch", userController.Watch)
+	jwtApi.GET("/watch/watched", userController.GetWatched)
+	jwtApi.DELETE("/watch/delete", userController.WatchDelete)
 
 	// Auth
 	authController := &controller.AuthController{}
