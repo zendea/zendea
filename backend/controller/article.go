@@ -1,13 +1,13 @@
 package controller
 
 import (
-	"strconv"
 	"github.com/gin-gonic/gin"
+	"strconv"
 
 	"zendea/builder"
-	"zendea/service"
-	"zendea/model"
 	"zendea/form"
+	"zendea/model"
+	"zendea/service"
 	"zendea/util"
 	"zendea/util/sqlcnd"
 )
@@ -79,9 +79,9 @@ func (c *ArticleController) Edit(ctx *gin.Context) {
 
 		c.Success(ctx, gin.H{
 			"articleId": article.ID,
-			"title": article.Title,
-			"content": article.Content,
-			"tags": tagNames,
+			"title":     article.Title,
+			"content":   article.Content,
+			"tags":      tagNames,
 		})
 	}
 }
@@ -137,7 +137,7 @@ func (c *ArticleController) List(ctx *gin.Context) {
 	articles, cursor := service.ArticleService.GetArticles(cursor)
 	c.Success(ctx, gin.H{
 		"results": builder.BuildSimpleArticles(articles),
-		"cursor":   strconv.FormatInt(cursor, 10),
+		"cursor":  strconv.FormatInt(cursor, 10),
 	})
 }
 
@@ -159,7 +159,7 @@ func (c *ArticleController) GetUserRecent(ctx *gin.Context) {
 	var gDto form.GeneralGetDto
 	if c.BindAndValidate(ctx, &gDto) {
 		articles := service.ArticleService.Find(sqlcnd.NewSqlCnd().Where("user_id = ? and status = ?",
-		gDto.ID, model.StatusOk).Desc("id").Limit(10))
+			gDto.ID, model.StatusOk).Desc("id").Limit(10))
 		c.Success(ctx, builder.BuildSimpleArticles(articles))
 	}
 }
@@ -170,13 +170,13 @@ func (c *ArticleController) GetUserArticles(ctx *gin.Context) {
 	var gDto form.GeneralGetDto
 	if c.BindAndValidate(ctx, &gDto) {
 		articles, paging := service.ArticleService.List(sqlcnd.NewSqlCnd().
-		Eq("user_id", gDto.ID).
-		Eq("status", model.StatusOk).
-		Page(page, 20).Desc("id"))
+			Eq("user_id", gDto.ID).
+			Eq("status", model.StatusOk).
+			Page(page, 20).Desc("id"))
 
 		c.Success(ctx, gin.H{
 			"results": builder.BuildSimpleArticles(articles),
-			"page": paging,
+			"page":    paging,
 		})
 	}
 }

@@ -7,11 +7,11 @@ import (
 
 	"zendea/dao"
 	"zendea/model"
+	"zendea/oauth/gitee"
+	"zendea/oauth/github"
+	"zendea/oauth/qq"
 	"zendea/util"
 	"zendea/util/sqlcnd"
-	"zendea/oauth/github"
-	"zendea/oauth/gitee"
-	"zendea/oauth/qq"
 )
 
 var LoginSourceService = newLoginSourceService()
@@ -86,8 +86,8 @@ func (s *loginSourceService) GetOrCreateByGithub(code, state string) (*model.Log
 		UserID:     sql.NullInt64{},
 		Avatar:     userInfo.AvatarUrl,
 		Nickname:   nickname,
-		TargetType:  model.LoginSourceTypeGithub,
-		TargetID:    strconv.FormatInt(userInfo.Id, 10),
+		TargetType: model.LoginSourceTypeGithub,
+		TargetID:   strconv.FormatInt(userInfo.Id, 10),
 		ExtraData:  userInfoJson,
 		CreateTime: util.NowTimestamp(),
 		UpdateTime: util.NowTimestamp(),
@@ -120,8 +120,8 @@ func (s *loginSourceService) GetOrCreateByGitee(code, state string) (*model.Logi
 		UserID:     sql.NullInt64{},
 		Avatar:     userInfo.AvatarUrl,
 		Nickname:   nickname,
-		TargetType:  model.LoginSourceTypeGitee,
-		TargetID:    strconv.FormatInt(userInfo.Id, 10),
+		TargetType: model.LoginSourceTypeGitee,
+		TargetID:   strconv.FormatInt(userInfo.Id, 10),
 		ExtraData:  userInfoJson,
 		CreateTime: util.NowTimestamp(),
 		UpdateTime: util.NowTimestamp(),
@@ -149,8 +149,8 @@ func (s *loginSourceService) GetOrCreateByQQ(code, state string) (*model.LoginSo
 		UserID:     sql.NullInt64{},
 		Avatar:     userInfo.FigureurlQQ1,
 		Nickname:   strings.TrimSpace(userInfo.Nickname),
-		TargetType:  model.LoginSourceTypeQQ,
-		TargetID:    userInfo.Unionid,
+		TargetType: model.LoginSourceTypeQQ,
+		TargetID:   userInfo.Unionid,
 		ExtraData:  userInfoJson,
 		CreateTime: util.NowTimestamp(),
 		UpdateTime: util.NowTimestamp(),

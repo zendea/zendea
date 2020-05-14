@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"github.com/gin-gonic/gin"
 	"github.com/dchest/captcha"
+	"github.com/gin-gonic/gin"
 
 	"zendea/util/urls"
 )
@@ -21,7 +21,7 @@ func (c *CaptchaController) GetRequest(ctx *gin.Context) {
 	data := make(map[string]interface{})
 	data["captchaId"] = captchaID
 	data["captchaUrl"] = captchaURL
-	
+
 	c.Success(ctx, data)
 }
 

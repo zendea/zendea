@@ -7,8 +7,8 @@ import (
 	"github.com/jinzhu/gorm"
 
 	"zendea/dao"
-	"zendea/model"
 	"zendea/form"
+	"zendea/model"
 	"zendea/util"
 	"zendea/util/sqlcnd"
 )
@@ -36,10 +36,10 @@ func (s *linkService) List(cnd *sqlcnd.SqlCnd) (list []model.Link, paging *sqlcn
 
 func (s *linkService) Create(dto form.LinkCreateForm) (*model.Link, error) {
 	link := &model.Link{
-		Title:   dto.Title,
-		Url:     dto.URL,
-		Summary: dto.Summary,
-		Logo:    dto.Logo,
+		Title:      dto.Title,
+		Url:        dto.URL,
+		Summary:    dto.Summary,
+		Logo:       dto.Logo,
 		CreateTime: util.NowTimestamp(),
 	}
 	err := dao.Tx(func(tx *gorm.DB) error {
@@ -61,7 +61,7 @@ func (s *linkService) Update(dto form.LinkUpdateForm) error {
 		"status":      dto.Status,
 		"update_time": util.NowTimestamp(),
 	})
-	
+
 	return err
 }
 

@@ -12,8 +12,8 @@ import (
 	"zendea/model"
 	"zendea/service"
 	"zendea/util"
-	"zendea/util/log"
 	"zendea/util/avatar"
+	"zendea/util/log"
 	"zendea/util/markdown"
 	"zendea/util/strtrim"
 	"zendea/util/urls"
@@ -405,11 +405,11 @@ func BuildNotification(notification *model.Notification) *model.NotificationResp
 			detailUrl = urls.TopicUrl(entityId.Int())
 		}
 		icon = "comment"
-	} else if notification.Type == model.MsgTypeTopicLike  {
+	} else if notification.Type == model.MsgTypeTopicLike {
 		entityId := gjson.Get(notification.ExtraData, "entityId")
 		detailUrl = urls.TopicUrl(entityId.Int())
 		icon = "heart"
-	} else if notification.Type == model.MsgTypeUserWatch  {
+	} else if notification.Type == model.MsgTypeUserWatch {
 		entityId := gjson.Get(notification.ExtraData, "entityId")
 		detailUrl = urls.UserUrl(entityId.Int())
 		icon = "eye"

@@ -7,8 +7,8 @@ import (
 	"zendea/dao"
 	"zendea/model"
 	"zendea/util"
-	"zendea/util/log"
 	"zendea/util/email"
+	"zendea/util/log"
 	"zendea/util/sqlcnd"
 	"zendea/util/urls"
 )
@@ -97,7 +97,7 @@ func (s *notificationService) SendUserWatchNotification(userWatch *model.UserWat
 	// 给被关注者发消息
 	s.Produce(fromId, authorId, content, quoteContent, model.MsgTypeUserWatch, map[string]interface{}{
 		"entityType":  model.EntityTypeUser,
-		"entityId":   userWatch.WatcherID,
+		"entityId":    userWatch.WatcherID,
 		"userWatchID": userWatch.ID,
 	})
 }

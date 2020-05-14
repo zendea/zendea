@@ -5,7 +5,7 @@ import (
 )
 
 var (
-	ErrorNotLogin         = NewError(1,  "请先登录")
+	ErrorNotLogin         = NewError(1, "请先登录")
 	ErrorTopicNotFound    = NewError(-1, "话题不存在")
 	ErrorArticleNotFound  = NewError(-2, "文章不存在")
 	ErrorTagNotFound      = NewError(-3, "标签不存在")

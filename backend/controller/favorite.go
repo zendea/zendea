@@ -3,15 +3,14 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 
-	"zendea/util"
 	"zendea/form"
 	"zendea/service"
+	"zendea/util"
 )
 
 type FavoriteController struct {
 	BaseController
 }
-
 
 // GetFavorited 是否收藏了
 func (c *FavoriteController) GetFavorited(ctx *gin.Context) {

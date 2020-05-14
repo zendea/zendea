@@ -15,7 +15,7 @@ var (
 )
 
 type nodeCache struct {
-	cache cache.LoadingCache
+	cache    cache.LoadingCache
 	allCache cache.LoadingCache
 }
 

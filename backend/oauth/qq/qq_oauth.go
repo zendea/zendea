@@ -9,8 +9,8 @@ import (
 
 	"github.com/go-resty/resty/v2"
 	"github.com/goburrow/cache"
-	"github.com/tidwall/gjson"
 	"github.com/spf13/viper"
+	"github.com/tidwall/gjson"
 
 	"zendea/util"
 	"zendea/util/log"

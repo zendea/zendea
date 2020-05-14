@@ -1,16 +1,16 @@
 package controller
 
 import (
-	"strings"
 	"github.com/gin-gonic/gin"
+	"strings"
 
 	"zendea/builder"
+	"zendea/cache"
+	"zendea/form"
+	"zendea/model"
 	"zendea/service"
 	"zendea/util"
 	"zendea/util/sqlcnd"
-	"zendea/model"
-	"zendea/form"
-	"zendea/cache"
 )
 
 type UserController struct {
@@ -85,14 +85,13 @@ func (c *UserController) GetScorelogs(ctx *gin.Context) {
 	page := form.FormValueIntDefault(ctx, "page", 1)
 	user := c.GetCurrentUser(ctx)
 
-
 	logs, paging := service.UserScoreLogService.List(sqlcnd.NewSqlCnd().
 		Eq("user_id", user.ID).
 		Page(page, 20).Desc("id"))
 
 	c.Success(ctx, gin.H{
 		"results": logs,
-		"paging": paging,
+		"paging":  paging,
 	})
 }
 
@@ -125,7 +124,7 @@ func (c *UserController) GetNotifications(ctx *gin.Context) {
 
 	c.Success(ctx, gin.H{
 		"results": builder.BuildNotifications(messages),
-		"paging": paging,
+		"paging":  paging,
 	})
 }
 
@@ -149,7 +148,7 @@ func (c *UserController) GetFavorites(ctx *gin.Context) {
 
 	c.Success(ctx, gin.H{
 		"results": builder.BuildFavorites(favorites),
-		"cursor": cursor,
+		"cursor":  cursor,
 	})
 }
 
@@ -198,7 +197,6 @@ func (c *UserController) GetWatched(ctx *gin.Context) {
 	}
 	c.Success(ctx, data)
 }
-
 
 // Delete 取消收藏
 func (c *UserController) WatchDelete(ctx *gin.Context) {
@@ -257,7 +255,7 @@ func (c *UserController) SetPassword(ctx *gin.Context) {
 	user := c.GetCurrentUser(ctx)
 
 	var (
-		password = strings.TrimSpace(ctx.Request.FormValue("password"))
+		password   = strings.TrimSpace(ctx.Request.FormValue("password"))
 		rePassword = strings.TrimSpace(ctx.Request.FormValue("rePassword"))
 	)
 

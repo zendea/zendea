@@ -5,11 +5,11 @@ import (
 
 	"zendea/builder"
 	"zendea/cache"
+	"zendea/form"
+	"zendea/model"
 	"zendea/service"
 	"zendea/util"
 	"zendea/util/sqlcnd"
-	"zendea/model"
-	"zendea/form"
 )
 
 type TopicController struct {
@@ -29,7 +29,6 @@ func (c *TopicController) Show(ctx *gin.Context) {
 		c.Success(ctx, builder.BuildTopic(topic))
 	}
 }
-
 
 // List 帖子列表
 func (c *TopicController) List(ctx *gin.Context) {
@@ -243,11 +242,10 @@ func (c *TopicController) GetUserRecent(ctx *gin.Context) {
 	var gDto form.GeneralGetDto
 	if c.BindAndValidate(ctx, &gDto) {
 		topics := service.TopicService.Find(sqlcnd.NewSqlCnd().Where("user_id = ? and status = ?",
-		gDto.ID, model.StatusOk).Desc("id").Limit(10))
+			gDto.ID, model.StatusOk).Desc("id").Limit(10))
 		c.Success(ctx, builder.BuildSimpleTopics(topics))
 	}
 }
-
 
 // GetUserTopics 用户的帖子
 func (c *TopicController) GetUserTopics(ctx *gin.Context) {
@@ -255,13 +253,13 @@ func (c *TopicController) GetUserTopics(ctx *gin.Context) {
 	var gDto form.GeneralGetDto
 	if c.BindAndValidate(ctx, &gDto) {
 		topics, paging := service.TopicService.List(sqlcnd.NewSqlCnd().
-		Eq("user_id", gDto.ID).
-		Eq("status", model.StatusOk).
-		Page(page, 20).Desc("id"))
+			Eq("user_id", gDto.ID).
+			Eq("status", model.StatusOk).
+			Page(page, 20).Desc("id"))
 
 		c.Success(ctx, gin.H{
 			"results": builder.BuildSimpleTopics(topics),
-			"page": paging,
+			"page":    paging,
 		})
 	}
 }

@@ -5,21 +5,21 @@ import (
 )
 
 type UserInfo struct {
-	Id           int64    `json:"id"`
-	Username     string   `json:"username"`
-	Email        string   `json:"email"`
-	Nickname     string   `json:"nickname"`
-	Avatar       string   `json:"avatar"`
-	Level        int      `json:"level"`
-	LevelName    string   `json:"levelName"`
-	Website      string   `json:"website"`
-	Description  string   `json:"description"`
-	Score        int      `json:"score"`        // 积分
-	TopicCount   int      `json:"topicCount"`   // 话题数量
-	CommentCount int      `json:"commentCount"` // 跟帖数量
-	PasswordSet  bool     `json:"passwordSet"`  // 密码已设置
-	Status       int      `json:"status"`
-	CreateTime   int64    `json:"createTime"`
+	Id           int64  `json:"id"`
+	Username     string `json:"username"`
+	Email        string `json:"email"`
+	Nickname     string `json:"nickname"`
+	Avatar       string `json:"avatar"`
+	Level        int    `json:"level"`
+	LevelName    string `json:"levelName"`
+	Website      string `json:"website"`
+	Description  string `json:"description"`
+	Score        int    `json:"score"`        // 积分
+	TopicCount   int    `json:"topicCount"`   // 话题数量
+	CommentCount int    `json:"commentCount"` // 跟帖数量
+	PasswordSet  bool   `json:"passwordSet"`  // 密码已设置
+	Status       int    `json:"status"`
+	CreateTime   int64  `json:"createTime"`
 }
 
 type TagResponse struct {

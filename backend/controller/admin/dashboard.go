@@ -1,9 +1,9 @@
 package admin
 
 import (
+	"github.com/gin-gonic/gin"
 	"runtime"
 	"time"
-	"github.com/gin-gonic/gin"
 
 	"zendea/config"
 	"zendea/controller"

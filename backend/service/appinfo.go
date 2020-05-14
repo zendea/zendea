@@ -1,8 +1,8 @@
 package service
 
 import (
-	"zendea/model"
 	"zendea/config"
+	"zendea/model"
 )
 
 var AppinfoService = newAppinfoService()

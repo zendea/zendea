@@ -15,8 +15,8 @@ const (
 	StatusDeleted = 1 // 删除
 	StatusPending = 2 // 待审核
 
-	UserLevelGeneral  = 0  // 普通用户
-	UserLevelAdmin    = 10 // 管理员
+	UserLevelGeneral = 0  // 普通用户
+	UserLevelAdmin   = 10 // 管理员
 
 	ContentTypeHtml     = "html"
 	ContentTypeMarkdown = "markdown"
@@ -29,7 +29,7 @@ const (
 	NotificationStatusUnread = 0 // 消息未读
 	NotificationStatusReaded = 1 // 消息已读
 
-	MsgTypeComment = 0   // 回复消息
+	MsgTypeComment   = 0 // 回复消息
 	MsgTypeTopicLike = 1 // 话题点赞
 	MsgTypeUserWatch = 2 // 用户关注
 

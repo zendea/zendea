@@ -3,8 +3,8 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 
-	"zendea/oauth/github"
 	"zendea/oauth/gitee"
+	"zendea/oauth/github"
 	"zendea/oauth/qq"
 )
 

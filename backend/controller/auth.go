@@ -1,13 +1,13 @@
 package controller
 
 import (
-	"github.com/gin-gonic/gin"
 	"github.com/dchest/captcha"
+	"github.com/gin-gonic/gin"
 
 	"zendea/builder"
+	"zendea/form"
 	"zendea/service"
 	"zendea/util"
-	"zendea/form"
 )
 
 // AuthController auth controller
@@ -31,8 +31,8 @@ func (c *AuthController) Signup(ctx *gin.Context) {
 			return
 		}
 		c.Success(ctx, gin.H{
-			"user":  builder.BuildUser(user),
-			"ref":   ref,
+			"user": builder.BuildUser(user),
+			"ref":  ref,
 		})
 	}
 }

@@ -1,15 +1,15 @@
 package admin
 
 import (
-	"strconv"
 	"github.com/gin-gonic/gin"
+	"strconv"
 
 	"zendea/cache"
 	"zendea/controller"
-	"zendea/util"
-	"zendea/util/sqlcnd"
 	"zendea/form"
 	"zendea/service"
+	"zendea/util"
+	"zendea/util/sqlcnd"
 )
 
 // SectionController section controller
@@ -23,7 +23,7 @@ func (c *SectionController) Show(ctx *gin.Context) {
 	if c.BindAndValidate(ctx, &gDto) {
 		section := service.SectionService.Get(gDto.ID)
 		if section == nil {
-			c.Fail(ctx, util.NewErrorMsg("Section not found, id=" + strconv.FormatInt(gDto.ID, 10)))
+			c.Fail(ctx, util.NewErrorMsg("Section not found, id="+strconv.FormatInt(gDto.ID, 10)))
 			return
 		}
 		c.Success(ctx, section)
@@ -54,10 +54,10 @@ func (c *SectionController) Update(ctx *gin.Context) {
 	}
 	section := service.SectionService.Get(gDto.ID)
 	if section == nil {
-		c.Fail(ctx, util.NewErrorMsg("Section not found, id=" + strconv.FormatInt(gDto.ID, 10)))
+		c.Fail(ctx, util.NewErrorMsg("Section not found, id="+strconv.FormatInt(gDto.ID, 10)))
 		return
 	}
-	
+
 	var sectionForm form.SectionUpdateForm
 	if !c.BindAndValidate(ctx, &sectionForm) {
 		return

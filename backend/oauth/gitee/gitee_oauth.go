@@ -6,8 +6,8 @@ import (
 
 	"github.com/go-resty/resty/v2"
 	"github.com/goburrow/cache"
-	"golang.org/x/oauth2"
 	"github.com/spf13/viper"
+	"golang.org/x/oauth2"
 
 	"zendea/util"
 	"zendea/util/log"

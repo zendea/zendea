@@ -1,15 +1,16 @@
 package urls
 
 import (
+	"github.com/spf13/viper"
 	"net/url"
 	"strconv"
 	"strings"
-	"github.com/spf13/viper"
 
 	"zendea/util/log"
 )
 
 var BaseUrl = viper.GetString("base.url")
+
 // 是否是内部链接
 func IsInternalUrl(href string) bool {
 	if IsAnchor(href) {

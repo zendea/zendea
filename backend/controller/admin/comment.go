@@ -1,16 +1,16 @@
 package admin
 
 import (
-	"strconv"
 	"github.com/gin-gonic/gin"
+	"strconv"
 
 	"zendea/builder"
 	"zendea/controller"
+	"zendea/form"
+	"zendea/service"
 	"zendea/util"
 	"zendea/util/markdown"
 	"zendea/util/sqlcnd"
-	"zendea/form"
-	"zendea/service"
 )
 
 // CommentController comment controller
@@ -24,7 +24,7 @@ func (c *CommentController) Show(ctx *gin.Context) {
 	if c.BindAndValidate(ctx, &gDto) {
 		comment := service.CommentService.Get(gDto.ID)
 		if comment == nil {
-			c.Fail(ctx, util.NewErrorMsg("Comment not found, id=" + strconv.FormatInt(gDto.ID, 10)))
+			c.Fail(ctx, util.NewErrorMsg("Comment not found, id="+strconv.FormatInt(gDto.ID, 10)))
 			return
 		}
 		c.Success(ctx, comment)
@@ -39,10 +39,10 @@ func (c *CommentController) Update(ctx *gin.Context) {
 	}
 	comment := service.CommentService.Get(gDto.ID)
 	if comment == nil {
-		c.Fail(ctx, util.NewErrorMsg("Comment not found, id=" + strconv.FormatInt(gDto.ID, 10)))
+		c.Fail(ctx, util.NewErrorMsg("Comment not found, id="+strconv.FormatInt(gDto.ID, 10)))
 		return
 	}
-	
+
 	var commentForm form.CommentUpdateForm
 	if !c.BindAndValidate(ctx, &commentForm) {
 		return

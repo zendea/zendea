@@ -3,8 +3,8 @@ package main
 import (
 	"github.com/spf13/cobra"
 	"os"
-	"zendea/config"
 	"zendea/cmd"
+	"zendea/config"
 )
 
 var rootCmd = &cobra.Command{

@@ -1,10 +1,10 @@
 package service
 
 import (
+	"errors"
 	"math"
 	"path"
 	"time"
-	"errors"
 
 	"github.com/gorilla/feeds"
 	"github.com/jinzhu/gorm"
@@ -12,8 +12,8 @@ import (
 
 	"zendea/cache"
 	"zendea/dao"
-	"zendea/model"
 	"zendea/form"
+	"zendea/model"
 	"zendea/util"
 	"zendea/util/log"
 	"zendea/util/sqlcnd"
@@ -72,8 +72,8 @@ func (s *topicService) Update(dto form.TopicUpdateForm) error {
 			return err
 		}
 		tagIds := dao.TagDao.GetOrCreates(util.ParseTagsToArray(dto.Tags)) // 创建文章对应标签
-		dao.TopicTagDao.DeleteTopicTags(dto.ID)                           // 先删掉所有的标签
-		dao.TopicTagDao.AddTopicTags(dto.ID, tagIds)                      // 然后重新添加标签
+		dao.TopicTagDao.DeleteTopicTags(dto.ID)                            // 先删掉所有的标签
+		dao.TopicTagDao.AddTopicTags(dto.ID, tagIds)                       // 然后重新添加标签
 		return nil
 	})
 

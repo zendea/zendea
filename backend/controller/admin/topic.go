@@ -1,16 +1,16 @@
 package admin
 
 import (
-	"strconv"
 	"github.com/gin-gonic/gin"
+	"strconv"
 
 	"zendea/builder"
 	"zendea/controller"
+	"zendea/form"
+	"zendea/service"
 	"zendea/util"
 	"zendea/util/markdown"
 	"zendea/util/sqlcnd"
-	"zendea/form"
-	"zendea/service"
 )
 
 // TopicController topic controller
@@ -24,7 +24,7 @@ func (c *TopicController) Show(ctx *gin.Context) {
 	if c.BindAndValidate(ctx, &gDto) {
 		topic := service.TopicService.Get(gDto.ID)
 		if topic == nil {
-			c.Fail(ctx, util.NewErrorMsg("Topic not found, id=" + strconv.FormatInt(gDto.ID, 10)))
+			c.Fail(ctx, util.NewErrorMsg("Topic not found, id="+strconv.FormatInt(gDto.ID, 10)))
 			return
 		}
 		c.Success(ctx, topic)
@@ -39,10 +39,10 @@ func (c *TopicController) Update(ctx *gin.Context) {
 	}
 	topic := service.TopicService.Get(gDto.ID)
 	if topic == nil {
-		c.Fail(ctx, util.NewErrorMsg("Topic not found, id=" + strconv.FormatInt(gDto.ID, 10)))
+		c.Fail(ctx, util.NewErrorMsg("Topic not found, id="+strconv.FormatInt(gDto.ID, 10)))
 		return
 	}
-	
+
 	var topicForm form.TopicUpdateForm
 	if !c.BindAndValidate(ctx, &topicForm) {
 		return

@@ -7,16 +7,16 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-	"github.com/tidwall/gjson"
 	"github.com/spf13/viper"
+	"github.com/tidwall/gjson"
 
 	"zendea/cache"
 	"zendea/dao"
-	"zendea/model"
 	"zendea/form"
+	"zendea/model"
 	"zendea/util"
-	"zendea/util/log"
 	"zendea/util/avatar"
+	"zendea/util/log"
 	"zendea/util/sqlcnd"
 	"zendea/util/uploader"
 )
@@ -64,7 +64,7 @@ func (s *userService) Update(dto form.UserUpdateForm) error {
 		"update_time": util.NowTimestamp(),
 	})
 	cache.UserCache.Invalidate(dto.ID)
-	
+
 	return err
 }
 
@@ -375,7 +375,6 @@ func (s *userService) SyncUserCount() {
 	})
 }
 
-
 var (
 	errInvalidAccount = errors.New("账号或密码错误")
 	errInvalidCode    = errors.New("请输入正确验证码")
@@ -393,7 +392,7 @@ func (s *userService) VerifyAndReturnUserInfo(username, password string) (bool, 
 
 	if userModel == nil {
 		return false, errInvalidAccount, model.User{}
-	} 
+	}
 	// Account not exits
 	if userModel.ID < 1 {
 		return false, errInvalidAccount, model.User{}
@@ -404,6 +403,6 @@ func (s *userService) VerifyAndReturnUserInfo(username, password string) (bool, 
 		return false, errInvalidAccount, model.User{}
 	}
 
-	return true, nil, *userModel 
+	return true, nil, *userModel
 
 }

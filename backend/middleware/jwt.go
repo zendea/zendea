@@ -35,15 +35,15 @@ type LoginOAuthDto struct {
 //todo : 用单独的claims model去掉user model
 func JwtAuth(LoginType int) *jwt.GinJWTMiddleware {
 	jwtMiddleware, err := jwt.New(&jwt.GinJWTMiddleware{
-		Realm:            "Jwt",
+		Realm: "Jwt",
 		// SigningAlgorithm: "RS256",
 		// PubKeyFile:       "keys/jwt_private_key.pem",
 		// PrivKeyFile:      "keys/jwt_public_key.pem",
-		Key:              []byte(viper.GetString("jwt.key")),
-		Timeout:          time.Hour * 24,
-		MaxRefresh:       time.Hour * 24 * 90,
-		IdentityKey:      viper.GetString("jwt.identity_key"),
-		LoginResponse:    LoginResponse,
+		Key:           []byte(viper.GetString("jwt.key")),
+		Timeout:       time.Hour * 24,
+		MaxRefresh:    time.Hour * 24 * 90,
+		IdentityKey:   viper.GetString("jwt.identity_key"),
+		LoginResponse: LoginResponse,
 		PayloadFunc: func(data interface{}) jwt.MapClaims {
 			if v, ok := data.(model.UserClaims); ok {
 				return jwt.MapClaims{
@@ -131,7 +131,7 @@ func AuthenticatorOAuth(c *gin.Context) (interface{}, error) {
 
 	account, err := service.LoginSourceService.GetOrCreate(provider, oauthDto.Code, oauthDto.State)
 	if err != nil {
-		
+
 		return nil, err
 	}
 

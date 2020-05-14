@@ -18,7 +18,7 @@ type UploadController struct {
 const uploadMaxBytes int64 = 1024 * 1024 * 3 // 1M
 
 // Upload upload file
-func (c *UploadController) Upload(ctx *gin.Context)  {
+func (c *UploadController) Upload(ctx *gin.Context) {
 	file, header, err := ctx.Request.FormFile("image")
 	if err != nil {
 		c.Fail(ctx, util.FromError(err))
@@ -49,7 +49,7 @@ func (c *UploadController) Upload(ctx *gin.Context)  {
 }
 
 // UploadFromEditor upload file from editor
-func (c *UploadController) UploadFromEditor(ctx *gin.Context)  {
+func (c *UploadController) UploadFromEditor(ctx *gin.Context) {
 	errFiles := make([]string, 0)
 	succMap := make(map[string]string)
 
@@ -58,7 +58,7 @@ func (c *UploadController) UploadFromEditor(ctx *gin.Context)  {
 		ctx.IndentedJSON(http.StatusOK, gin.H{
 			"code":    1,
 			"message": "请先登录",
-			"data":    gin.H{
+			"data": gin.H{
 				"errFiles": errFiles,
 				"succMap":  succMap,
 			},

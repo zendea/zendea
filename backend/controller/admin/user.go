@@ -1,16 +1,16 @@
 package admin
 
 import (
-	"strconv"
 	"github.com/gin-gonic/gin"
+	"strconv"
 
+	"zendea/cache"
 	"zendea/controller"
-	"zendea/util"
-	"zendea/util/sqlcnd"
 	"zendea/form"
 	"zendea/model"
-	"zendea/cache"
 	"zendea/service"
+	"zendea/util"
+	"zendea/util/sqlcnd"
 )
 
 // UserController user controller
@@ -24,7 +24,7 @@ func (c *UserController) Show(ctx *gin.Context) {
 	if c.BindAndValidate(ctx, &gDto) {
 		user := service.UserService.Get(gDto.ID)
 		if user == nil {
-			c.Fail(ctx, util.NewErrorMsg("User not found, id=" + strconv.FormatInt(gDto.ID, 10)))
+			c.Fail(ctx, util.NewErrorMsg("User not found, id="+strconv.FormatInt(gDto.ID, 10)))
 			return
 		}
 		c.Success(ctx, c.buildUserItem(user))
@@ -44,10 +44,10 @@ func (c *UserController) Update(ctx *gin.Context) {
 	}
 	user := service.UserService.Get(gDto.ID)
 	if user == nil {
-		c.Fail(ctx, util.NewErrorMsg("User not found, id=" + strconv.FormatInt(gDto.ID, 10)))
+		c.Fail(ctx, util.NewErrorMsg("User not found, id="+strconv.FormatInt(gDto.ID, 10)))
 		return
 	}
-	
+
 	var userForm form.UserUpdateForm
 	if !c.BindAndValidate(ctx, &userForm) {
 		return
@@ -109,8 +109,8 @@ func (c *UserController) buildUserItem(user *model.User) map[string]interface{} 
 	result["username"] = user.Username.String
 	result["nickname"] = user.Nickname
 	result["avatar"] = user.Avatar
-	result["email"] =  user.Email.String
-	result["score"] =  score
+	result["email"] = user.Email.String
+	result["score"] = score
 	result["createTime"] = user.CreateTime
 	result["updateTime"] = user.UpdateTime
 

@@ -5,8 +5,8 @@ import (
 	"github.com/jinzhu/gorm"
 
 	"zendea/dao"
-	"zendea/model"
 	"zendea/form"
+	"zendea/model"
 	"zendea/util"
 	"zendea/util/sqlcnd"
 )
@@ -33,7 +33,7 @@ func (s *nodeService) Create(dto form.NodeCreateForm) (*model.Node, error) {
 		Name:        dto.Name,
 		Description: dto.Description,
 		SortNo:      dto.SortNo,
-		Status:		 dto.Status,
+		Status:      dto.Status,
 		CreateTime:  util.NowTimestamp(),
 	}
 	if err := dao.NodeDao.Create(node); err != nil {
@@ -51,7 +51,7 @@ func (s *nodeService) Update(dto form.NodeUpdateForm) error {
 		"status":      dto.Status,
 		"update_time": util.NowTimestamp(),
 	})
-	
+
 	return err
 }
 

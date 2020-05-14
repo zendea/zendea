@@ -4,7 +4,7 @@ package form
 type AuthSigninForm struct {
 	Username    string `form:"username" json:"username" binding:"required"`
 	Password    string `form:"password" json:"password" binding:"required"`
-	CaptchaID   string  `form:"captchaId" json:"captchaId" binding: "required"`
+	CaptchaID   string `form:"captchaId" json:"captchaId" binding: "required"`
 	CaptchaCode string `form:"captchaCode" json:"captchaCode"`
 }
 

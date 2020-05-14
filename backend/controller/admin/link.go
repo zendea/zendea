@@ -1,14 +1,14 @@
 package admin
 
 import (
-	"strconv"
 	"github.com/gin-gonic/gin"
+	"strconv"
 
 	"zendea/controller"
-	"zendea/util"
-	"zendea/util/sqlcnd"
 	"zendea/form"
 	"zendea/service"
+	"zendea/util"
+	"zendea/util/sqlcnd"
 )
 
 // LinkController link controller
@@ -22,7 +22,7 @@ func (c *LinkController) Show(ctx *gin.Context) {
 	if c.BindAndValidate(ctx, &gDto) {
 		link := service.LinkService.Get(gDto.ID)
 		if link == nil {
-			c.Fail(ctx, util.NewErrorMsg("Link not found, id=" + strconv.FormatInt(gDto.ID, 10)))
+			c.Fail(ctx, util.NewErrorMsg("Link not found, id="+strconv.FormatInt(gDto.ID, 10)))
 			return
 		}
 		c.Success(ctx, link)
@@ -51,10 +51,10 @@ func (c *LinkController) Update(ctx *gin.Context) {
 	}
 	link := service.LinkService.Get(gDto.ID)
 	if link == nil {
-		c.Fail(ctx, util.NewErrorMsg("Link not found, id=" + strconv.FormatInt(gDto.ID, 10)))
+		c.Fail(ctx, util.NewErrorMsg("Link not found, id="+strconv.FormatInt(gDto.ID, 10)))
 		return
 	}
-	
+
 	var linkForm form.LinkUpdateForm
 	if !c.BindAndValidate(ctx, &linkForm) {
 		return

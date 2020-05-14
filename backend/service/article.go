@@ -2,22 +2,22 @@ package service
 
 import (
 	"math"
-	"time"
 	"path"
+	"time"
 
-	"github.com/jinzhu/gorm"
-	"github.com/gorilla/feeds"
 	"github.com/emirpasic/gods/sets/hashset"
+	"github.com/gorilla/feeds"
+	"github.com/jinzhu/gorm"
 	"github.com/spf13/viper"
 
 	"zendea/cache"
 	"zendea/dao"
-	"zendea/model"
 	"zendea/form"
+	"zendea/model"
 	"zendea/util"
 	"zendea/util/log"
-	"zendea/util/urls"
 	"zendea/util/sqlcnd"
+	"zendea/util/urls"
 )
 
 type ScanArticleCallback func(articles []model.Article)
@@ -42,6 +42,7 @@ func (s *articleService) Find(cnd *sqlcnd.SqlCnd) []model.Article {
 func (s *articleService) List(cnd *sqlcnd.SqlCnd) (list []model.Article, paging *sqlcnd.Paging) {
 	return dao.ArticleDao.List(cnd)
 }
+
 // Create 发表文章
 func (s *articleService) Create(dto form.ArticleCreateForm) (*model.Article, error) {
 	article := &model.Article{
@@ -80,9 +81,9 @@ func (s *articleService) Update(dto form.ArticleUpdateForm) error {
 		if err != nil {
 			return err
 		}
-		tagIds := dao.TagDao.GetOrCreates(util.ParseTagsToArray(dto.Tags))             // 创建文章对应标签
-		dao.ArticleTagDao.DeleteArticleTags(dto.ID)      // 先删掉所有的标签
-		dao.ArticleTagDao.AddArticleTags(dto.ID, tagIds) // 然后重新添加标签
+		tagIds := dao.TagDao.GetOrCreates(util.ParseTagsToArray(dto.Tags)) // 创建文章对应标签
+		dao.ArticleTagDao.DeleteArticleTags(dto.ID)                        // 先删掉所有的标签
+		dao.ArticleTagDao.AddArticleTags(dto.ID, tagIds)                   // 然后重新添加标签
 		return nil
 	})
 	cache.ArticleTagCache.Invalidate(dto.ID)
@@ -132,7 +133,6 @@ func (s *articleService) GetArticleTags(articleId int64) []model.Tag {
 	}
 	return cache.TagCache.GetList(tagIds)
 }
-
 
 // GetTagArticles 标签文章列表
 func (s *articleService) GetTagArticles(tagId int64, cursor int64) (articles []model.Article, nextCursor int64) {

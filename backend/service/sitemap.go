@@ -153,7 +153,7 @@ func (s *sitemapService) GenerateMisc() {
 		Priority:   "1.0",
 	})
 
-	TagService.Scan(func(tags []model.Tag) bool { 
+	TagService.Scan(func(tags []model.Tag) bool {
 		for _, tag := range tags {
 			tagUrl := urls.TagArticlesUrl(tag.ID)
 

@@ -15,8 +15,8 @@ var (
 )
 
 type sectionCache struct {
-	cache cache.LoadingCache
-	allCache cache.LoadingCache
+	cache             cache.LoadingCache
+	allCache          cache.LoadingCache
 	sectionNodesCache cache.LoadingCache
 }
 
@@ -95,4 +95,3 @@ func (c *sectionCache) GetSectionNodes(sectionId int64) []model.Node {
 func (c *sectionCache) InvalidateSectionNodes(sectionId int64) {
 	c.sectionNodesCache.Invalidate(sectionId)
 }
-

@@ -3,10 +3,10 @@ package service
 import (
 	"errors"
 	"zendea/dao"
+	"zendea/form"
 	"zendea/model"
 	"zendea/util"
 	"zendea/util/sqlcnd"
-	"zendea/form"
 )
 
 var SectionService = newSectionService()
@@ -48,7 +48,7 @@ func (s *sectionService) Update(dto form.SectionUpdateForm) error {
 		"sort_no":     dto.SortNo,
 		"update_time": util.NowTimestamp(),
 	})
-	
+
 	return err
 }
 

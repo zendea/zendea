@@ -1,21 +1,21 @@
 package admin
 
 import (
+	"github.com/PuerkitoBio/goquery"
+	"github.com/gin-gonic/gin"
 	"strconv"
 	"strings"
-	"github.com/gin-gonic/gin"
-	"github.com/PuerkitoBio/goquery"
 
 	"zendea/builder"
 	"zendea/cache"
 	"zendea/controller"
+	"zendea/form"
 	"zendea/model"
+	"zendea/service"
 	"zendea/util"
 	"zendea/util/markdown"
 	"zendea/util/sqlcnd"
 	"zendea/util/strtrim"
-	"zendea/form"
-	"zendea/service"
 )
 
 // ArticleController article controller
@@ -29,7 +29,7 @@ func (c *ArticleController) Show(ctx *gin.Context) {
 	if c.BindAndValidate(ctx, &gDto) {
 		article := service.ArticleService.Get(gDto.ID)
 		if article == nil {
-			c.Fail(ctx, util.NewErrorMsg("Article not found, id=" + strconv.FormatInt(gDto.ID, 10)))
+			c.Fail(ctx, util.NewErrorMsg("Article not found, id="+strconv.FormatInt(gDto.ID, 10)))
 			return
 		}
 		c.Success(ctx, article)
@@ -44,10 +44,10 @@ func (c *ArticleController) Update(ctx *gin.Context) {
 	}
 	article := service.ArticleService.Get(gDto.ID)
 	if article == nil {
-		c.Fail(ctx, util.NewErrorMsg("Article not found, id=" + strconv.FormatInt(gDto.ID, 10)))
+		c.Fail(ctx, util.NewErrorMsg("Article not found, id="+strconv.FormatInt(gDto.ID, 10)))
 		return
 	}
-	
+
 	var articleForm form.ArticleUpdateForm
 	if !c.BindAndValidate(ctx, &articleForm) {
 		return
@@ -88,7 +88,7 @@ func (c *ArticleController) List(ctx *gin.Context) {
 		item := util.StructToMap(article, "content")
 		item["user"] = builder.BuildUserDefaultIfNull(article.UserId)
 
-				// 简介
+		// 简介
 		if article.ContentType == model.ContentTypeMarkdown {
 			mr := markdown.NewMd().Run(article.Content)
 			if len(article.Summary) == 0 {

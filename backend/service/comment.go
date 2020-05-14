@@ -5,8 +5,8 @@ import (
 	"strings"
 
 	"zendea/dao"
-	"zendea/model"
 	"zendea/form"
+	"zendea/model"
 	"zendea/util"
 	"zendea/util/sqlcnd"
 )
@@ -46,9 +46,9 @@ func (s *commentService) Count(cnd *sqlcnd.SqlCnd) int {
 
 func (s *commentService) Update(dto form.CommentUpdateForm) error {
 	err := dao.NodeDao.Updates(dto.ID, map[string]interface{}{
-		"status":      dto.Status,
+		"status": dto.Status,
 	})
-	
+
 	return err
 }
 
@@ -89,6 +89,7 @@ func (s *commentService) Create(dto form.CommentCreateForm) (*model.Comment, err
 
 	return comment, nil
 }
+
 // 发表评论
 func (s *commentService) Publish(userId int64, createForm *form.CommentCreateForm) (*model.Comment, error) {
 	createForm.Content = strings.TrimSpace(createForm.Content)

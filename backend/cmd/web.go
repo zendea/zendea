@@ -9,16 +9,16 @@ import (
 	"io/ioutil"
 	"os"
 	"strings"
-	"zendea/util/log"
-	"zendea/dao"
 	"zendea/cache"
 	"zendea/cron"
+	"zendea/dao"
 	"zendea/middleware"
 	"zendea/router"
+	"zendea/util/log"
 )
 
 var (
-	conf   string
+	conf     string
 	port     string
 	loglevel uint8
 	cors     bool

@@ -1,15 +1,15 @@
 package admin
 
 import (
-	"strconv"
 	"github.com/gin-gonic/gin"
+	"strconv"
 
-	"zendea/controller"
 	"zendea/cache"
-	"zendea/util"
-	"zendea/util/sqlcnd"
+	"zendea/controller"
 	"zendea/form"
 	"zendea/service"
+	"zendea/util"
+	"zendea/util/sqlcnd"
 )
 
 // NodeController node controller
@@ -23,7 +23,7 @@ func (c *NodeController) Show(ctx *gin.Context) {
 	if c.BindAndValidate(ctx, &gDto) {
 		node := service.NodeService.Get(gDto.ID)
 		if node == nil {
-			c.Fail(ctx, util.NewErrorMsg("Node not found, id=" + strconv.FormatInt(gDto.ID, 10)))
+			c.Fail(ctx, util.NewErrorMsg("Node not found, id="+strconv.FormatInt(gDto.ID, 10)))
 			return
 		}
 		c.Success(ctx, node)
@@ -52,10 +52,10 @@ func (c *NodeController) Update(ctx *gin.Context) {
 	}
 	node := service.NodeService.Get(gDto.ID)
 	if node == nil {
-		c.Fail(ctx, util.NewErrorMsg("Node not found, id=" + strconv.FormatInt(gDto.ID, 10)))
+		c.Fail(ctx, util.NewErrorMsg("Node not found, id="+strconv.FormatInt(gDto.ID, 10)))
 		return
 	}
-	
+
 	var nodeForm form.NodeUpdateForm
 	if !c.BindAndValidate(ctx, &nodeForm) {
 		return

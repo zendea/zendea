@@ -96,7 +96,7 @@ func (s *userWatchService) Watch(userID int64, watcherID int64) error {
 		// 点赞
 		userWatch := &model.UserWatch{
 			UserID:     userID,
-			WatcherID:   watcherID,
+			WatcherID:  watcherID,
 			CreateTime: util.NowTimestamp(),
 		}
 		err := dao.UserWatchDao.Create(userWatch)

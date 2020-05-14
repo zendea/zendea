@@ -1,15 +1,15 @@
 package admin
 
 import (
-	"strconv"
 	"github.com/gin-gonic/gin"
+	"strconv"
 
 	"zendea/builder"
 	"zendea/controller"
-	"zendea/util"
-	"zendea/util/sqlcnd"
 	"zendea/form"
 	"zendea/service"
+	"zendea/util"
+	"zendea/util/sqlcnd"
 )
 
 // UserScoreLogController user score controller
@@ -23,7 +23,7 @@ func (c *UserScoreLogController) Show(ctx *gin.Context) {
 	if c.BindAndValidate(ctx, &gDto) {
 		userScoreLog := service.UserScoreLogService.Get(gDto.ID)
 		if userScoreLog == nil {
-			c.Fail(ctx, util.NewErrorMsg("User score log not found, id=" + strconv.FormatInt(gDto.ID, 10)))
+			c.Fail(ctx, util.NewErrorMsg("User score log not found, id="+strconv.FormatInt(gDto.ID, 10)))
 			return
 		}
 		c.Success(ctx, userScoreLog)
