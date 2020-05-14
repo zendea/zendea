@@ -77,8 +77,8 @@ func Setup(e *gin.Engine, cors bool) {
 	api.GET("/user/topics/:id", topicController.GetUserTopics)
 
 	api.GET("/topic/:id/recentlikes", topicController.GetRecentlikesBy)
-	jwtApi.POST("/topic/:id/like", middleware.SigninRequired, topicController.Like)
-	jwtApi.POST("/topic/:id/favorite", middleware.SigninRequired, topicController.Favorite)
+	jwtApi.POST("/topic/:id/like", topicController.Like)
+	jwtApi.POST("/topic/:id/favorite", topicController.Favorite)
 
 	// Comments
 	commentController := &controller.CommentController{}
@@ -87,8 +87,8 @@ func Setup(e *gin.Engine, cors bool) {
 
 	// Favorites
 	favoriteController := &controller.FavoriteController{}
-	api.GET("/favorites/favorited", favoriteController.GetFavorited)
-	api.DELETE("/favorite/delete", favoriteController.Delete)
+	jwtApi.GET("/favorites/favorited", favoriteController.GetFavorited)
+	jwtApi.DELETE("/favorite/delete", favoriteController.Delete)
 
 	// Tags
 	tagController := &controller.TagController{}
@@ -101,8 +101,9 @@ func Setup(e *gin.Engine, cors bool) {
 	jwtApi.POST("/articles", articleController.Store)
 	api.GET("/articles", articleController.List)
 	api.GET("/article/:id", articleController.Show)
-	api.GET("/article/:id/edit", articleController.Edit)
+	jwtApi.GET("/article/:id/edit", articleController.Edit)
 	jwtApi.PUT("/article/:id", articleController.Update)
+	jwtApi.POST("/article/:id/favorite", articleController.Favorite)
 
 	api.GET("/articles/related/:id", articleController.GetRelatedBy)
 	api.GET("/articles/tag/:id", articleController.GetTagArticles)

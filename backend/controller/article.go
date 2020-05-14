@@ -198,3 +198,19 @@ func (c *ArticleController) GetRelatedBy(ctx *gin.Context) {
 		c.Success(ctx, builder.BuildSimpleArticles(relatedArticles))
 	}
 }
+
+// Favorite 收藏文章
+func (c *ArticleController) Favorite(ctx *gin.Context) {
+	user := c.GetCurrentUser(ctx)
+	var gDto form.GeneralGetDto
+	if !c.BindAndValidate(ctx, &gDto) {
+		c.Fail(ctx, util.ErrorArticleNotFound)
+		return
+	}
+	err := service.FavoriteService.AddArticleFavorite(user.ID, gDto.ID)
+	if err != nil {
+		c.Fail(ctx, util.FromError(err))
+		return
+	}
+	c.Success(ctx, nil)
+}

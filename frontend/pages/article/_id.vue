@@ -265,7 +265,7 @@ export default {
     async addFavorite(articleId) {
       try {
         if (this.favorited) {
-          await this.$axios.get('/api/favorite/delete', {
+          await this.$axios.delete('/api/favorite/delete', {
             params: {
               entityType: 'article',
               entityId: articleId
@@ -274,7 +274,7 @@ export default {
           this.favorited = false
           this.$toast.success('已取消收藏！')
         } else {
-          await this.$axios.post('/api/article/favorite/' + articleId)
+          await this.$axios.post('/api/article/' + articleId + '/favorite')
           this.favorited = true
           this.$toast.success('收藏成功！')
         }
