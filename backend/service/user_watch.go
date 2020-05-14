@@ -78,6 +78,9 @@ func (s *userWatchService) Recent(userId int64, count int) []model.UserWatch {
 }
 
 func (s *userWatchService) Watch(userID int64, watcherID int64) error {
+	if userID == watcherID {
+		return errors.New("不能自己关注自己")
+	}
 	user := dao.UserDao.Get(userID)
 	if user == nil || user.Status != model.StatusOk {
 		return errors.New("用户不存在")

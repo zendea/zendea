@@ -53,6 +53,7 @@
           <div class="widget-header">关注</div>
           <div class="widget-content topic-actions">
             <div
+              v-if="!isOwner"
               :class="{ active: user.watched }"
               @click="watch(user)"
               class="action watch"
@@ -60,7 +61,7 @@
             >
               <i class="iconfont icon-eye" />
             </div>
-            <span class="split"></span>
+            <span v-if="!isOwner" class="split"></span>
             <div v-for="user in userWatchers" :key="user.id">
               <a :href="'/user/' + user.id" :alt="user.username">
                 <img
