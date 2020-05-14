@@ -72,7 +72,6 @@ type TopicSimpleResponse struct {
 	ViewCount       int64          `json:"viewCount"`
 	CommentCount    int64          `json:"commentCount"`
 	LikeCount       int64          `json:"likeCount"`
-	Liked           bool           `json:"liked"`
 	CreateTime      int64          `json:"createTime"`
 }
 

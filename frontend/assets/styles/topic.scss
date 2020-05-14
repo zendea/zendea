@@ -103,21 +103,12 @@
 
         .like-btn {
           transition: all 0.5s;
-          cursor: pointer;
 
           background-color: rgba(126, 107, 1, 0.08);
           color: #e7672e;
-          // padding: 0;
-          // display: inline-block;
-          // height: 20px;
-          // width: 20px;
-          // line-height: 20px;
-          // border-radius: 10px;
-          // text-align: center;
           padding: 4px;
           border-radius: 50%;
 
-          &:hover,
           &.liked {
             color: #fff;
             background-color: #e7672e;

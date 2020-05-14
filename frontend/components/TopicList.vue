@@ -69,11 +69,7 @@
           </div>
           <div v-if="!inHome" class="topic-header-right">
             <div v-if="topic.likeCount" class="like">
-              <span
-                :class="{ liked: topic.liked }"
-                @click="like(topic)"
-                class="like-btn"
-              >
+              <span class="like-btn">
                 <i class="iconfont icon-heart" />
               </span>
               <span v-if="topic.likeCount" class="like-count">{{
@@ -122,28 +118,6 @@ export default {
     hasNodeId: {
       type: Boolean,
       default: false
-    }
-  },
-  methods: {
-    async like(topic) {
-      try {
-        await this.$axios.post('/api/topic/like/' + topic.topicId)
-        topic.liked = true
-        topic.likeCount++
-      } catch (e) {
-        if (e.code === 1) {
-          this.$toast.info('请登录后点赞！！！', {
-            action: {
-              text: '去登录',
-              onClick: (e, toastObject) => {
-                utils.toSignin()
-              }
-            }
-          })
-        } else {
-          this.$toast.error(e.message || e)
-        }
-      }
     }
   }
 }
