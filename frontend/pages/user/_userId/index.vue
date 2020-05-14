@@ -63,7 +63,11 @@
             </div>
             <span v-if="!isOwner" class="split"></span>
             <div v-for="user in userWatchers" :key="user.id">
-              <a :href="'/user/' + user.id" :alt="user.username">
+              <a
+                :href="'/user/' + user.id"
+                :alt="user.username"
+                :title="user.username"
+              >
                 <img
                   v-if="user.avatar"
                   v-lazy="user.avatar"
