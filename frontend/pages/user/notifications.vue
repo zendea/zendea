@@ -53,13 +53,7 @@
                   <div class="content">
                     <div class="message-content">
                       <span class="icon">
-                        <i
-                          :class="
-                            message.type === 0
-                              ? 'iconfont icon-comment'
-                              : 'iconfont icon-heart'
-                          "
-                        />
+                        <i :class="'iconfont icon-' + message.icon" />
                       </span>
                       {{ message.content }}
                       <a

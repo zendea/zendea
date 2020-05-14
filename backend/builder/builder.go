@@ -395,6 +395,7 @@ func BuildNotification(notification *model.Notification) *model.NotificationResp
 	}
 
 	detailUrl := ""
+	icon := ""
 	if notification.Type == model.MsgTypeComment {
 		entityType := gjson.Get(notification.ExtraData, "entityType")
 		entityId := gjson.Get(notification.ExtraData, "entityId")
@@ -403,15 +404,22 @@ func BuildNotification(notification *model.Notification) *model.NotificationResp
 		} else if entityType.String() == model.EntityTypeTopic {
 			detailUrl = urls.TopicUrl(entityId.Int())
 		}
+		icon = "comment"
 	} else if notification.Type == model.MsgTypeTopicLike  {
 		entityId := gjson.Get(notification.ExtraData, "entityId")
 		detailUrl = urls.TopicUrl(entityId.Int())
+		icon = "heart"
+	} else if notification.Type == model.MsgTypeUserWatch  {
+		entityId := gjson.Get(notification.ExtraData, "entityId")
+		detailUrl = urls.UserUrl(entityId.Int())
+		icon = "eye"
 	}
 	from := BuildUserDefaultIfNull(notification.FromId)
 	if notification.FromId <= 0 {
 		from.Nickname = "系统通知"
 		from.Avatar = avatar.DefaultAvatar
 	}
+
 	return &model.NotificationResponse{
 		MessageId:    notification.ID,
 		From:         from,
@@ -419,6 +427,7 @@ func BuildNotification(notification *model.Notification) *model.NotificationResp
 		Content:      notification.Content,
 		QuoteContent: notification.QuoteContent,
 		Type:         notification.Type,
+		Icon:         icon,
 		DetailUrl:    detailUrl,
 		ExtraData:    notification.ExtraData,
 		Status:       notification.Status,

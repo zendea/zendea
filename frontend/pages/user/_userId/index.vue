@@ -51,7 +51,7 @@
         <user-center-sidebar :user="user" />
         <div class="widget">
           <div class="widget-header">关注</div>
-          <div class="widget-content topic-actions">
+          <div class="widget-content watch-actions">
             <div
               v-if="!isOwner"
               :class="{ active: user.watched }"
@@ -210,7 +210,7 @@ export default {
 .more {
   text-align: right;
 }
-.topic-actions {
+.watch-actions {
   display: flex;
   height: 42px;
   width: max-content;

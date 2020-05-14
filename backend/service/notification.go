@@ -76,6 +76,32 @@ func (s *notificationService) MarkRead(userId int64) error {
 	return dao.NotificationDao.UpdateStatusBatch(userId)
 }
 
+// 用户关注
+func (s *notificationService) SendUserWatchNotification(userWatch *model.UserWatch) {
+	user := cache.UserCache.Get(userWatch.WatcherID)
+
+	var (
+		fromId       = userWatch.WatcherID // 消息发送人
+		authorId     int64                 // 被关注人
+		content      string                // 消息内容
+		quoteContent string                // 引用内容
+	)
+
+	authorId = userWatch.UserID
+	content = user.Username.String + " 关注了你"
+	quoteContent = ""
+
+	if authorId <= 0 {
+		return
+	}
+	// 给被关注者发消息
+	s.Produce(fromId, authorId, content, quoteContent, model.MsgTypeUserWatch, map[string]interface{}{
+		"entityType":  model.EntityTypeUser,
+		"entityId":   userWatch.WatcherID,
+		"userWatchID": userWatch.ID,
+	})
+}
+
 // 内容被点赞
 func (s *notificationService) SendTopicLikeNotification(topicLike *model.TopicLike) {
 	user := cache.UserCache.Get(topicLike.UserId)

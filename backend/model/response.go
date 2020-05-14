@@ -116,6 +116,7 @@ type NotificationResponse struct {
 	Content      string    `json:"content"` // 消息内容
 	QuoteContent string    `json:"quoteContent"`
 	Type         int       `json:"type"`
+	Icon         string    `json:"icon"`
 	DetailUrl    string    `json:"detailUrl"` // 消息详情url
 	ExtraData    string    `json:"extraData"`
 	Status       int       `json:"status"`
