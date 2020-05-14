@@ -27,13 +27,13 @@
           </div>
           <div class="comment-meta">
             <span
-              class="comment-nickname"
+              class="comment-username"
               itemprop="creator"
               itemscope
               itemtype="http://schema.org/Person"
             >
               <a :href="'/user/' + comment.user.id" itemprop="name">
-                {{ comment.user.nickname }}
+                {{ comment.user.username }}
               </a>
             </span>
             <span class="comment-time">
@@ -58,7 +58,7 @@
                   v-lazy="comment.quote.user.avatar"
                   class="avatar size-20"
                 />
-                <a class="quote-nickname">{{ comment.quote.user.nickname }}</a>
+                <a class="quote-username">{{ comment.quote.user.username }}</a>
                 <span class="quote-time">
                   {{ comment.quote.createTime | prettyDate }}
                 </span>
@@ -85,7 +85,7 @@
         <div ref="commentEditor" class="comment-input-wrapper">
           <div v-if="quote" class="comment-quote-info">
             <i class="iconfont icon-reply"></i> 回复：
-            <label v-text="quote.user.nickname" />
+            <label v-text="quote.user.username" />
             <i
               @click="cancelReply"
               class="iconfont icon-close"
@@ -322,7 +322,7 @@ export default {
         position: relative;
         height: 36px;
 
-        .comment-nickname {
+        .comment-username {
           position: relative;
           font-size: 14px;
           font-weight: 800;
@@ -378,7 +378,7 @@ export default {
         .comment-quote-user {
           display: flex;
 
-          .quote-nickname {
+          .quote-username {
             line-height: 20px;
             font-weight: 700;
             margin-left: 5px;
