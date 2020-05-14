@@ -9,7 +9,7 @@
                 <li><a href="/">首页</a></li>
                 <li>
                   <a :href="'/user/' + user.id + '?tab=articles'">{{
-                    user.nickname
+                    user.username
                   }}</a>
                 </li>
                 <li class="is-active">

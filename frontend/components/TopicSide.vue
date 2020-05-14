@@ -16,10 +16,10 @@
                 v-lazy="user.avatar"
                 class="avatar size-30"
               />
-              <avatar v-else :username="user.nickname" :size="30" />
+              <avatar v-else :username="user.username" :size="30" />
             </a>
             <div class="score-user-info">
-              <a :href="'/user/' + user.id">{{ user.nickname }}</a>
+              <a :href="'/user/' + user.id">{{ user.username }}</a>
               <p>{{ user.topicCount }} 帖子 • {{ user.commentCount }} 评论</p>
             </div>
             <div class="score-rank-info">

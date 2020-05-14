@@ -11,7 +11,7 @@
                 </li>
                 <li>
                   <a :href="'/user/' + currentUser.id">{{
-                    currentUser.nickname
+                    currentUser.username
                   }}</a>
                 </li>
                 <li class="is-active">
@@ -36,14 +36,14 @@
                 </div>
                 <div class="message-item-right">
                   <div class="message-item-meta">
-                    <span v-if="message.from.id > 0" class="nickname">
+                    <span v-if="message.from.id > 0" class="username">
                       <a :href="'/user/' + message.from.id" target="_blank">{{
-                        message.from.nickname
+                        message.from.username
                       }}</a>
                     </span>
-                    <span v-else class="nickname">
+                    <span v-else class="username">
                       <a href="javascript:void(0)" target="_blank">{{
-                        message.from.nickname
+                        message.from.username
                       }}</a>
                     </span>
                     <span class="time">{{
@@ -144,7 +144,7 @@ export default {
       width: 100%;
 
       .message-item-meta {
-        span.nickname {
+        span.username {
           font-size: 16px;
           font-weight: bold;
         }

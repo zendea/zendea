@@ -9,7 +9,7 @@
                 <li><a href="/">首页</a></li>
                 <li>
                   <a :href="'/user/' + currentUser.id">{{
-                    currentUser.nickname
+                    currentUser.username
                   }}</a>
                 </li>
                 <li class="is-active">
@@ -46,7 +46,7 @@
                     <div class="article-meta">
                       <span class="article-meta-item"
                         ><a :href="'/user/' + favorite.user.id">{{
-                          favorite.user.nickname
+                          favorite.user.username
                         }}</a></span
                       >
                       <span class="article-meta-item"

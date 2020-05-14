@@ -12,14 +12,14 @@
               <div class="topic-header-left">
                 <a
                   :href="'/user/' + topic.user.id"
-                  :title="topic.user.nickname"
+                  :title="topic.user.username"
                 >
                   <img
                     v-if="topic.user.avatar"
                     v-lazy="topic.user.avatar"
                     class="avatar"
                   />
-                  <avatar v-else :username="topic.user.nickname" :size="45" />
+                  <avatar v-else :username="topic.user.username" :size="45" />
                 </a>
               </div>
               <div class="topic-header-center">
@@ -34,7 +34,7 @@
                     itemtype="http://schema.org/Person"
                   >
                     <a :href="'/user/' + topic.user.id" itemprop="name">{{
-                      topic.user.nickname
+                      topic.user.username
                     }}</a>
                   </span>
                   <span class="meta-item">
@@ -139,7 +139,7 @@
               <div v-for="user in likeUsers" :key="user.id">
                 <a
                   :href="'/user/' + user.id"
-                  :alt="user.nickname"
+                  :alt="user.username"
                   target="_blank"
                 >
                   <img
@@ -147,7 +147,7 @@
                     v-lazy="user.avatar"
                     class="avatar size-30"
                   />
-                  <avatar v-else :username="user.nickname" :size="30" />
+                  <avatar v-else :username="user.username" :size="30" />
                 </a>
               </div>
             </div>
@@ -166,18 +166,18 @@
         <div class="user-info">
           <div class="base">
             <div>
-              <a :href="'/user/' + topic.user.id" :alt="topic.user.nickname">
+              <a :href="'/user/' + topic.user.id" :alt="topic.user.username">
                 <img
                   v-if="topic.user.avatar"
                   v-lazy="topic.user.avatar"
                   class="avatar"
                 />
-                <avatar v-else :username="topic.user.nickname" :size="80" />
+                <avatar v-else :username="topic.user.username" :size="80" />
               </a>
             </div>
-            <div class="nickname">
-              <a :href="'/user/' + topic.user.id" :alt="topic.user.nickname">
-                {{ topic.user.nickname }}
+            <div class="username">
+              <a :href="'/user/' + topic.user.id" :alt="topic.user.username">
+                {{ topic.user.username }}
                 <span :class="'level-' + topic.user.level">
                   ({{ topic.user.levelName }})
                 </span>
@@ -364,7 +364,7 @@ export default {
       margin-left: 80px;
     }
 
-    .nickname {
+    .username {
       font-size: 15px;
       font-weight: 700;
       a:hover {

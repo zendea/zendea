@@ -16,7 +16,7 @@
         <div class="msglist">
           <ul>
             <li v-for="msg in messages" :key="msg.messageId" class="msg-item">
-              <a :href="'/user/' + msg.from.id" :title="msg.from.nickname">
+              <a :href="'/user/' + msg.from.id" :title="msg.from.username">
                 <img
                   v-if="msg.from.avatar"
                   v-lazy="msg.from.avatar"

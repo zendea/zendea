@@ -1,16 +1,14 @@
 <template>
   <div class="right-container">
     <div class="widget">
-      <div class="widget-header">
-        {{ user.nickname }}
-      </div>
+      <div class="widget-header">{{ user.username }} ({{ user.nickname }})</div>
       <div class="widget-content">
         <img
           v-if="user.avatar"
           v-lazy="user.avatar"
           class="img-avatar avatar-5000"
         />
-        <avatar v-else :username="user.nickname" :size="50" />
+        <avatar v-else :username="user.username" :size="50" />
         <div v-if="user.description" class="description">
           <p>{{ user.description }}</p>
         </div>

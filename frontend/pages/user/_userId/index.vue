@@ -110,7 +110,7 @@ export default {
   },
   head() {
     return {
-      title: this.$siteTitle(this.user.nickname)
+      title: this.$siteTitle(this.user.username)
     }
   }
 }

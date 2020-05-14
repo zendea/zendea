@@ -12,7 +12,7 @@
               <div class="article-item-left">
                 <a
                   :href="'/user/' + article.user.id"
-                  :title="article.user.nickname"
+                  :title="article.user.username"
                   target="_blank"
                 >
                   <img v-lazy="article.user.avatar" class="avatar" />
@@ -32,7 +32,7 @@
                       itemscope
                       itemtype="http://schema.org/Person"
                       ><span itemprop="name">{{
-                        article.user.nickname
+                        article.user.username
                       }}</span></a
                     >发布于
                     <time

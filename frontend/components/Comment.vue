@@ -10,7 +10,7 @@
     >
       <ul class="comments">
         <li
-          v-for="comment in results"
+          v-for="(comment, index) in results"
           :key="comment.commentId"
           class="comment"
           itemprop="comment"
@@ -23,7 +23,7 @@
               v-lazy="comment.user.avatar"
               class="avatar"
             />
-            <avatar v-else :username="comment.user.nickname" :size="36" />
+            <avatar v-else :username="comment.user.username" :size="36" />
           </div>
           <div class="comment-meta">
             <span
@@ -36,6 +36,7 @@
                 {{ comment.user.username }}
               </a>
             </span>
+            <span class="comment-floor">#{{ index + 1 }}</span>
             <span class="comment-time">
               <time
                 :datetime="
@@ -332,7 +333,10 @@ export default {
           text-decoration: none;
           display: inline-block;
         }
-
+        .comment-floor {
+          font-size: 14px;
+          color: #7aa87a;
+        }
         .comment-time {
           font-size: 12px;
           color: #999999;

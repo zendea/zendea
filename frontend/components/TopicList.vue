@@ -4,13 +4,13 @@
       <article itemscope itemtype="http://schema.org/BlogPosting">
         <div class="topic-header">
           <div class="topic-header-left">
-            <a :href="'/user/' + topic.user.id" :title="topic.user.nickname">
+            <a :href="'/user/' + topic.user.id" :title="topic.user.username">
               <img
                 v-if="topic.user.avatar"
                 v-lazy="topic.user.avatar"
                 class="avatar"
               />
-              <avatar v-else :username="topic.user.nickname" :size="50" />
+              <avatar v-else :username="topic.user.username" :size="50" />
             </a>
           </div>
           <div class="topic-header-center">
@@ -35,7 +35,7 @@
                 itemtype="http://schema.org/Person"
               >
                 <a :href="'/user/' + topic.user.id" itemprop="name">{{
-                  topic.user.nickname
+                  topic.user.username
                 }}</a>
               </span>
               <span
@@ -47,7 +47,7 @@
               >
                 最后由
                 <a :href="'/user/' + topic.lastCommentUser.id">{{
-                  topic.lastCommentUser.nickname
+                  topic.lastCommentUser.username
                 }}</a>
                 回复于
               </span>

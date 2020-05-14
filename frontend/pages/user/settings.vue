@@ -10,7 +10,7 @@
                   <a href="/">首页</a>
                 </li>
                 <li>
-                  <a :href="'/user/' + user.id">{{ user.nickname }}</a>
+                  <a :href="'/user/' + user.id">{{ user.username }}</a>
                 </li>
                 <li class="is-active">
                   <a href="#" aria-current="page">编辑资料</a>
@@ -81,7 +81,7 @@
                       :src="user.avatar"
                       style="width: 150px;height:150px;"
                     />
-                    <avatar v-else :username="user.nickname" :size="120" />
+                    <avatar v-else :username="user.username" :size="120" />
                     <div class="file">
                       <label class="file-label">
                         <input
@@ -531,7 +531,7 @@ export default {
   },
   head() {
     return {
-      title: this.$siteTitle(this.user.nickname + ' - 编辑资料')
+      title: this.$siteTitle(this.user.username + ' - 编辑资料')
     }
   }
 }

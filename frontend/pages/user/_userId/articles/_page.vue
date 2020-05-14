@@ -7,7 +7,7 @@
             <li><a href="article">首页</a></li>
             <li>
               <a :href="'/user/' + user.id + '?tab=articles'">{{
-                user.nickname
+                user.username
               }}</a>
             </li>
             <li class="is-active">
@@ -75,7 +75,7 @@ export default {
   },
   head() {
     return {
-      title: this.$siteTitle(this.user.nickname + ' - 文章')
+      title: this.$siteTitle(this.user.username + ' - 文章')
     }
   }
 }
