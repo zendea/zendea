@@ -28,7 +28,8 @@ const (
 	NotificationStatusUnread = 0 // 消息未读
 	NotificationStatusReaded = 1 // 消息已读
 
-	MsgTypeComment = 0 // 回复消息
+	MsgTypeComment = 0   // 回复消息
+	MsgTypeTopicLike = 1 // 话题点赞
 
 	LoginSourceTypeGithub = "github"
 	LoginSourceTypeGitee  = "gitee"

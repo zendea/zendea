@@ -52,16 +52,27 @@
                   </div>
                   <div class="content">
                     <div class="message-content">
+                      <span class="icon">
+                        <i
+                          :class="
+                            message.type === 0
+                              ? 'iconfont icon-comment'
+                              : 'iconfont icon-heart'
+                          "
+                        />
+                      </span>
                       {{ message.content }}
                       <a
                         v-if="message.detailUrl"
                         :href="message.detailUrl"
                         class="show-more"
-                        target="_blank"
                         >点击查看详情&gt;&gt;</a
                       >
                     </div>
-                    <blockquote class="message-quote">
+                    <blockquote
+                      v-if="message.quoteContent"
+                      class="message-quote"
+                    >
                       {{ message.quoteContent }}
                     </blockquote>
                   </div>

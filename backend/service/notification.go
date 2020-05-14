@@ -76,6 +76,34 @@ func (s *notificationService) MarkRead(userId int64) error {
 	return dao.NotificationDao.UpdateStatusBatch(userId)
 }
 
+// 内容被点赞
+func (s *notificationService) SendTopicLikeNotification(topicLike *model.TopicLike) {
+	user := cache.UserCache.Get(topicLike.UserId)
+
+	var (
+		fromId       = topicLike.UserId // 消息发送人
+		authorId     int64              // 点赞者编号
+		content      string             // 消息内容
+		quoteContent string             // 引用内容
+	)
+	topic := dao.TopicDao.Get(topicLike.TopicId)
+	if topic != nil {
+		authorId = topic.UserId
+		content = user.Username.String + " 点赞了你的话题：" + topic.Title
+		quoteContent = ""
+	}
+
+	if authorId <= 0 {
+		return
+	}
+	// 给帖子作者发消息
+	s.Produce(fromId, authorId, content, quoteContent, model.MsgTypeTopicLike, map[string]interface{}{
+		"entityType":  model.EntityTypeTopic,
+		"entityId":    topic.ID,
+		"topicLikeId": topicLike.ID,
+	})
+}
+
 // 评论被回复消息
 func (s *notificationService) SendCommentNotification(comment *model.Comment) {
 	user := cache.UserCache.Get(comment.UserId)
@@ -93,14 +121,14 @@ func (s *notificationService) SendCommentNotification(comment *model.Comment) {
 		article := dao.ArticleDao.Get(comment.EntityId)
 		if article != nil {
 			authorId = article.UserId
-			content = user.Nickname + " 回复了你的文章：" + summary
+			content = user.Username.String + " 回复了你的文章：" + summary
 			quoteContent = "《" + article.Title + "》"
 		}
 	} else if comment.EntityType == model.EntityTypeTopic { // 话题被评论
 		topic := dao.TopicDao.Get(comment.EntityId)
 		if topic != nil {
 			authorId = topic.UserId
-			content = user.Nickname + " 回复了你的话题：" + summary
+			content = user.Username.String + " 回复了你的话题：" + summary
 			quoteContent = "《" + topic.Title + "》"
 		}
 	}
@@ -121,7 +149,7 @@ func (s *notificationService) SendCommentNotification(comment *model.Comment) {
 		}
 
 		// 给被引用的人发消息
-		s.Produce(fromId, quote.UserId, user.Nickname+" 回复了你的评论："+summary, util.GetMarkdownSummary(quote.Content), model.MsgTypeComment, map[string]interface{}{
+		s.Produce(fromId, quote.UserId, user.Username.String+" 回复了你的评论："+summary, util.GetMarkdownSummary(quote.Content), model.MsgTypeComment, map[string]interface{}{
 			"entityType": comment.EntityType,
 			"entityId":   comment.EntityId,
 			"commentId":  comment.ID,

@@ -403,6 +403,9 @@ func BuildNotification(notification *model.Notification) *model.NotificationResp
 		} else if entityType.String() == model.EntityTypeTopic {
 			detailUrl = urls.TopicUrl(entityId.Int())
 		}
+	} else if notification.Type == model.MsgTypeTopicLike  {
+		entityId := gjson.Get(notification.ExtraData, "entityId")
+		detailUrl = urls.TopicUrl(entityId.Int())
 	}
 	from := BuildUserDefaultIfNull(notification.FromId)
 	if notification.FromId <= 0 {

@@ -86,14 +86,17 @@ func (s *topicLikeService) Like(userId int64, topicId int64) error {
 
 	return dao.Tx(func(tx *gorm.DB) error {
 		// 点赞
-		err := dao.TopicLikeDao.Create(&model.TopicLike{
+		topicLike := &model.TopicLike{
 			UserId:     userId,
 			TopicId:    topicId,
 			CreateTime: util.NowTimestamp(),
-		})
+		}
+		err := dao.TopicLikeDao.Create(topicLike)
 		if err != nil {
 			return err
 		}
+		// 发送点赞通知
+		NotificationService.SendTopicLikeNotification(topicLike)
 
 		return dao.DB().Model(&topic).UpdateColumn("like_count", gorm.Expr("like_count + ?", 1)).Error
 	})
