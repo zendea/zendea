@@ -6,10 +6,11 @@ require (
 	github.com/PuerkitoBio/goquery v1.5.1
 	github.com/aliyun/aliyun-oss-go-sdk v2.1.0+incompatible
 	github.com/appleboy/gin-jwt/v2 v2.6.3
+	github.com/baiyubin/aliyun-sts-go-sdk v0.0.0-20180326062324-cfa1a18b161f // indirect
 	github.com/dchest/captcha v0.0.0-20170622155422-6a29415a8364
 	github.com/emirpasic/gods v1.12.0
 	github.com/gin-contrib/cors v1.3.1
-	github.com/gin-gonic/gin v1.6.2
+	github.com/gin-gonic/gin v1.6.3
 	github.com/go-playground/validator/v10 v10.2.0
 	github.com/go-resty/resty/v2 v2.2.0
 	github.com/goburrow/cache v0.1.0
