@@ -11,7 +11,7 @@ database:
     host: 127.0.0.1:3306
     name: zendea
     user: root
-    password:
+    password: root123!
     pool:
       max: 20
       min: 5
