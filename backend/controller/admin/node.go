@@ -101,7 +101,7 @@ func (c *NodeController) List(ctx *gin.Context) {
 	var results []map[string]interface{}
 	for _, node := range list {
 		item := util.StructToMap(node)
-		item["section"] = cache.SectionCache.Get(node.SectionId)
+		item["section"] = cache.SectionCache.Get(node.SectionID)
 		results = append(results, item)
 	}
 

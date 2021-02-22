@@ -27,6 +27,7 @@ type NodeUpdateForm struct {
 type NodeCreateForm struct {
 	Name        string `form:"name" json:"name" binding:"required"`
 	Description string `form:"description" json:"description"`
+	SectionID   int64  `form:"sectionId" json:"sectionId"`
 	SortNo      int    `form:"sortNo" json:"sortNo"`
 	Status      int    `form:"status" json:"status"`
 }
