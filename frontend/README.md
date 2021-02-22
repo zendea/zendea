@@ -5,8 +5,11 @@
 ## Build Setup
 
 ``` bash
-# install dependencies
+# install dependencies --registry=https://registry.npm.taobao.org
 $ npm install
+
+# edit configurations
+$ cp nuxt.config.example.js nuxt.config.js
 
 # serve with hot reload at localhost:3000
 $ npm run dev
