@@ -18,7 +18,7 @@ require (
 	github.com/issue9/identicon v1.0.1
 	github.com/jinzhu/gorm v1.9.12
 	github.com/jordan-wright/email v0.0.0-20200322182553-8eef2508c362
-	github.com/microcosm-cc/bluemonday v1.0.2
+	github.com/microcosm-cc/bluemonday v1.0.19
 	github.com/pkg/errors v0.9.1
 	github.com/robfig/cron v1.2.0
 	github.com/rs/zerolog v1.18.0
