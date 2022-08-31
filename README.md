@@ -23,7 +23,7 @@
 
 ## 模块
 
-### backend
+### api
 
 > 基于`Go`语言开发，提供Restful风格接口。
 
@@ -32,7 +32,7 @@
 - JWT (https://github.com/appleboy/gin-jwt) JWT Middleware for Gin framework
 - gorm (http://gorm.io/) Go 语言 orm 框架
 
-### frontend
+### site
 
 > 前端页面渲染服务，基于`nuxt.js`实现。
 
