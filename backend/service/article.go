@@ -58,7 +58,7 @@ func (s *articleService) Create(dto form.ArticleCreateForm) (*model.Article, err
 		UpdateTime:  util.NowTimestamp(),
 	}
 
-	err := dao.Tx(func(tx *gorm.DB) error {
+	err := dao.Tx(dao.DB(), func(tx *gorm.DB) error {
 		tagIDs := dao.TagDao.GetOrCreates(util.ParseTagsToArray(dto.Tags))
 		err := dao.ArticleDao.Create(article)
 		if err != nil {
@@ -72,7 +72,7 @@ func (s *articleService) Create(dto form.ArticleCreateForm) (*model.Article, err
 
 // Update 编辑文章
 func (s *articleService) Update(dto form.ArticleUpdateForm) error {
-	err := dao.Tx(func(tx *gorm.DB) error {
+	err := dao.Tx(dao.DB(), func(tx *gorm.DB) error {
 		err := dao.ArticleDao.Updates(dto.ID, map[string]interface{}{
 			"title":       dto.Title,
 			"content":     dto.Content,

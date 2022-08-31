@@ -42,7 +42,7 @@ func (s *linkService) Create(dto form.LinkCreateForm) (*model.Link, error) {
 		Logo:       dto.Logo,
 		CreateTime: util.NowTimestamp(),
 	}
-	err := dao.Tx(func(tx *gorm.DB) error {
+	err := dao.Tx(dao.DB(), func(tx *gorm.DB) error {
 		err := dao.LinkDao.Create(link)
 		if err != nil {
 			return err
@@ -92,7 +92,7 @@ func (s *linkService) Submit(url, title, summary, logo string) (link *model.Link
 		CreateTime: util.NowTimestamp(),
 	}
 
-	err = dao.Tx(func(tx *gorm.DB) error {
+	err = dao.Tx(dao.DB(), func(tx *gorm.DB) error {
 		err := dao.LinkDao.Create(link)
 		if err != nil {
 			return err

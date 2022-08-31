@@ -54,7 +54,7 @@ func (s *settingService) SetAll(configStr string) error {
 	if !ok {
 		return errors.New("配置数据格式错误")
 	}
-	return dao.Tx(func(tx *gorm.DB) error {
+	return dao.Tx(dao.DB(), func(tx *gorm.DB) error {
 		for k := range configs {
 			v := json.Get(k).String()
 			if err := s.setSingle(tx, k, v, "", ""); err != nil {
@@ -67,7 +67,7 @@ func (s *settingService) SetAll(configStr string) error {
 
 // 设置配置，如果配置不存在，那么创建
 func (s *settingService) Set(key, value, name, description string) error {
-	return dao.Tx(func(tx *gorm.DB) error {
+	return dao.Tx(dao.DB(), func(tx *gorm.DB) error {
 		if err := s.setSingle(tx, key, value, name, description); err != nil {
 			return err
 		}

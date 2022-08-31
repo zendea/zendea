@@ -84,7 +84,7 @@ func (s *topicLikeService) Like(userId int64, topicId int64) error {
 		return errors.New("已点赞")
 	}
 
-	return dao.Tx(func(tx *gorm.DB) error {
+	return dao.Tx(dao.DB(), func(tx *gorm.DB) error {
 		// 点赞
 		topicLike := &model.TopicLike{
 			UserId:     userId,

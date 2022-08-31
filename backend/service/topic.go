@@ -61,7 +61,7 @@ func (s *topicService) Update(dto form.TopicUpdateForm) error {
 	if node == nil || node.Status != model.StatusOk {
 		return util.NewErrorMsg("节点不存在")
 	}
-	err := dao.Tx(func(tx *gorm.DB) error {
+	err := dao.Tx(dao.DB(), func(tx *gorm.DB) error {
 		err := dao.TopicDao.Updates(dto.ID, map[string]interface{}{
 			"node_id":     dto.NodeID,
 			"title":       dto.Title,
@@ -117,7 +117,7 @@ func (s *topicService) Create(dto form.TopicCreateForm) (*model.Topic, error) {
 		CreateTime:      now,
 	}
 
-	err := dao.Tx(func(tx *gorm.DB) error {
+	err := dao.Tx(dao.DB(), func(tx *gorm.DB) error {
 		tagIds := dao.TagDao.GetOrCreates(util.ParseTagsToArray(dto.Tags))
 		err := dao.TopicDao.Create(topic)
 		if err != nil {
@@ -200,7 +200,7 @@ func (s *topicService) IncrViewCount(topicId int64) {
 
 // 当帖子被评论的时候，更新最后回复时间、回复数量+1
 func (s *topicService) OnComment(topicId, lastCommentUserId, lastCommentTime int64) {
-	dao.Tx(func(tx *gorm.DB) error {
+	dao.Tx(dao.DB(), func(tx *gorm.DB) error {
 		if err := dao.DB().Model(&model.Topic{}).Where("id = ?", topicId).Updates(map[string]interface{}{"comment_count": gorm.Expr("comment_count + ?", 1), "last_comment_user_id": lastCommentUserId, "lastCommentTime": lastCommentTime}).Error; err != nil {
 			return err
 		}

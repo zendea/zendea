@@ -92,7 +92,7 @@ func (s *userWatchService) Watch(userID int64, watcherID int64) error {
 		return errors.New("已关注")
 	}
 
-	return dao.Tx(func(tx *gorm.DB) error {
+	return dao.Tx(dao.DB(), func(tx *gorm.DB) error {
 		// 点赞
 		userWatch := &model.UserWatch{
 			UserID:     userID,

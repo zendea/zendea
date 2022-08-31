@@ -161,7 +161,7 @@ func (s *userService) Create(username, email, nickname, password, rePassword str
 		UpdateTime: util.NowTimestamp(),
 	}
 
-	err = dao.Tx(func(tx *gorm.DB) error {
+	err = dao.Tx(dao.DB(), func(tx *gorm.DB) error {
 		if err := dao.UserDao.Create(user); err != nil {
 			return err
 		}
@@ -214,7 +214,7 @@ func (s *userService) SignInByLoginSource(loginSource *model.LoginSource) (*mode
 		CreateTime:  util.NowTimestamp(),
 		UpdateTime:  util.NowTimestamp(),
 	}
-	err := dao.Tx(func(tx *gorm.DB) error {
+	err := dao.Tx(dao.DB(), func(tx *gorm.DB) error {
 		if err := dao.UserDao.Create(user); err != nil {
 			return err
 		}

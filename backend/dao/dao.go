@@ -77,7 +77,7 @@ func DB() *gorm.DB {
 }
 
 // 事务环绕
-func Tx(txFunc func(tx *gorm.DB) error) (err error) {
+func Tx(db *gorm.DB, txFunc func(tx *gorm.DB) error) (err error) {
 	tx := db.Begin()
 	if tx.Error != nil {
 		return
