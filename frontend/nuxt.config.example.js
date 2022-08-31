@@ -100,7 +100,7 @@ export default {
   },
 
   proxy: {
-    '/api/': 'http://zendea-api:8082'
+    '/api/': 'http://dev.zendea.com:8082'
   },
 
   // Doc: https://github.com/shakee93/vue-toasted

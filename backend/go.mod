@@ -30,4 +30,5 @@ require (
 	github.com/vinta/pangu v3.0.0+incompatible
 	golang.org/x/crypto v0.0.0-20200423211502-4bdfaf469ed5
 	golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d
+	golang.org/x/sys v0.0.0-20220829200755-d48e67d00261 // indirect
 )
