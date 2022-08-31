@@ -1,7 +1,7 @@
 {
-  "name": "zendea-frontend",
+  "name": "zendea-site",
   "version": "1.0.0",
-  "description": "zendea-frontend",
+  "description": "zendea-site",
   "author": "zendea",
   "private": true,
   "scripts": {

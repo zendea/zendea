@@ -14,6 +14,7 @@ require (
 	github.com/go-playground/validator/v10 v10.4.1
 	github.com/go-resty/resty/v2 v2.2.0
 	github.com/goburrow/cache v0.1.0
+	github.com/golang-jwt/jwt/v4 v4.4.2 // indirect
 	github.com/gorilla/feeds v1.1.1
 	github.com/issue9/identicon v1.0.1
 	github.com/jinzhu/gorm v1.9.12
