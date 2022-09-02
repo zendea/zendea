@@ -24,9 +24,9 @@ export default {
   props: {
     currentTab: {
       type: Number,
-      default: 0
-    }
-  }
+      default: 0,
+    },
+  },
 }
 </script>
 
@@ -66,7 +66,7 @@ export default {
             bottom: -1px;
             left: -3px;
             height: 3px;
-            background: #e0245e;
+            background: #3273dc;
             content: '';
           }
         }
