@@ -36,7 +36,6 @@ func (c *BaseController) Success(ctx *gin.Context, data interface{}) {
 	ctx.IndentedJSON(http.StatusOK, gin.H{
 		"code":    0,
 		"message": "ok",
-		"success": true,
 		"data":    data,
 	})
 }
