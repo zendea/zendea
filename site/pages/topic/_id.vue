@@ -14,12 +14,7 @@
                   :href="'/user/' + topic.user.id"
                   :title="topic.user.username"
                 >
-                  <img
-                    v-if="topic.user.avatar"
-                    v-lazy="topic.user.avatar"
-                    class="avatar"
-                  />
-                  <avatar v-else :username="topic.user.username" :size="45" />
+                  avatar
                 </a>
               </div>
               <div class="topic-header-center">
@@ -108,14 +103,11 @@
                 v-html="topic.content"
                 v-lazy-container="{ selector: 'img' }"
               ></div>
-
-              <figure
-                v-if="topic.imageList"
-                v-for="image in topic.imageList"
-                :key="image"
-              >
-                <img v-lazy="image" />
-              </figure>
+              <div v-if="topic.imageList">
+                <figure v-for="image in topic.imageList" :key="image">
+                  <img v-lazy="image" />
+                </figure>
+              </div>
             </div>
 
             <div class="topic-actions">
@@ -142,12 +134,7 @@
                   :alt="user.username"
                   target="_blank"
                 >
-                  <img
-                    v-if="user.avatar"
-                    v-lazy="user.avatar"
-                    class="avatar size-30"
-                  />
-                  <avatar v-else :username="user.username" :size="30" />
+                  avatar
                 </a>
               </div>
             </div>
@@ -167,12 +154,7 @@
           <div class="base">
             <div>
               <a :href="'/user/' + topic.user.id" :alt="topic.user.username">
-                <img
-                  v-if="topic.user.avatar"
-                  v-lazy="topic.user.avatar"
-                  class="avatar"
-                />
-                <avatar v-else :username="topic.user.username" :size="80" />
+                avatar
               </a>
             </div>
             <div class="username">
@@ -208,9 +190,7 @@
         </div>
 
         <div ref="toc" v-if="topic.toc" class="widget no-bg toc">
-          <div class="widget-header">
-            目录
-          </div>
+          <div class="widget-header">目录</div>
           <div v-html="topic.toc" class="widget-content" />
         </div>
       </div>
@@ -224,7 +204,7 @@ import Comment from '~/components/Comment'
 
 export default {
   components: {
-    Comment
+    Comment,
   },
   async asyncData({ $axios, params, error }) {
     let topic
@@ -233,7 +213,7 @@ export default {
     } catch (e) {
       error({
         statusCode: 404,
-        message: '话题不存在'
+        message: '话题不存在',
       })
       return
     }
@@ -242,23 +222,23 @@ export default {
       $axios.get('/api/favorites/favorited', {
         params: {
           entityType: 'topic',
-          entityId: params.id
-        }
+          entityId: params.id,
+        },
       }),
       $axios.get('/api/comments', {
         params: {
           entityType: 'topic',
-          entityId: params.id
-        }
+          entityId: params.id,
+        },
       }),
-      $axios.get('/api/topic/' + params.id + '/recentlikes')
+      $axios.get('/api/topic/' + params.id + '/recentlikes'),
     ])
 
     return {
       topic,
       commentsPage,
       favorited: favorited.favorited,
-      likeUsers
+      likeUsers,
     }
   },
   computed: {
@@ -268,7 +248,7 @@ export default {
         this.topic &&
         this.$store.state.auth.currentUser.id === this.topic.user.id
       )
-    }
+    },
   },
   mounted() {
     utils.handleToc(this.$refs.toc)
@@ -280,8 +260,8 @@ export default {
           await this.$axios.delete('/api/favorite/delete', {
             params: {
               entityType: 'topic',
-              entityId: topicId
-            }
+              entityId: topicId,
+            },
           })
           this.favorited = false
           this.$toast.success('已取消收藏！')
@@ -305,7 +285,7 @@ export default {
           duration: 2000,
           onComplete() {
             utils.linkTo('/topics')
-          }
+          },
         })
       } catch (e) {
         console.error(e)
@@ -326,21 +306,21 @@ export default {
               text: '去登录',
               onClick: (e, toastObject) => {
                 utils.toSignin()
-              }
-            }
+              },
+            },
           })
         } else {
           topic.liked = true
           this.$toast.error(e.message || e)
         }
       }
-    }
+    },
   },
   head() {
     return {
-      title: this.$siteTitle(this.topic.title)
+      title: this.$siteTitle(this.topic.title),
     }
-  }
+  },
 }
 </script>
 

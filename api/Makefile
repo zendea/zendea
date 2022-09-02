@@ -29,3 +29,6 @@ all: build
 
 build:
 	go build $(BUILD_FLAGS) -ldflags '$(LDFLAGS)' -tags '$(TAGS)' -trimpath -o zendea
+
+run:
+	./zendea web

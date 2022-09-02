@@ -5,12 +5,7 @@
         <div class="topic-header">
           <div class="topic-header-left">
             <a :href="'/user/' + topic.user.id" :title="topic.user.username">
-              <img
-                v-if="topic.user.avatar"
-                v-lazy="topic.user.avatar"
-                class="avatar"
-              />
-              <avatar v-else :username="topic.user.username" :size="50" />
+              avatar
             </a>
           </div>
           <div class="topic-header-center">

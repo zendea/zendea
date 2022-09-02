@@ -18,12 +18,7 @@
           itemtype="http://schema.org/Comment"
         >
           <div class="comment-avatar">
-            <img
-              v-if="comment.user.avatar"
-              v-lazy="comment.user.avatar"
-              class="avatar"
-            />
-            <avatar v-else :username="comment.user.username" :size="36" />
+            avatar
           </div>
           <div class="comment-meta">
             <span

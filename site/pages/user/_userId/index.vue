@@ -30,7 +30,7 @@
               <a :href="'/user/' + user.id + '/topics'">查看更多&gt;&gt;</a>
             </div>
           </div>
-          <div v-else class="notification is-primary" style="margin-top: 10px;">
+          <div v-else class="notification is-primary" style="margin-top: 10px">
             暂无话题
           </div>
         </div>
@@ -42,7 +42,7 @@
               <a :href="'/user/' + user.id + '/articles'">查看更多&gt;&gt;</a>
             </div>
           </div>
-          <div v-else class="notification is-primary" style="margin-top: 10px;">
+          <div v-else class="notification is-primary" style="margin-top: 10px">
             暂无文章
           </div>
         </div>
@@ -68,12 +68,7 @@
                 :alt="user.username"
                 :title="user.username"
               >
-                <img
-                  v-if="user.avatar"
-                  v-lazy="user.avatar"
-                  class="avatar size-30"
-                />
-                <avatar v-else :username="user.username" :size="30" />
+                avatar
               </a>
             </div>
           </div>
@@ -95,7 +90,7 @@ export default {
   components: {
     TopicList,
     ArticleList,
-    UserCenterSidebar
+    UserCenterSidebar,
   },
   async asyncData({ $axios, params, query, error }) {
     let user
@@ -104,7 +99,7 @@ export default {
     } catch (err) {
       error({
         statusCode: 404,
-        message: err.message || '系统错误'
+        message: err.message || '系统错误',
       })
       return
     }
@@ -112,10 +107,10 @@ export default {
     const [watched, userWatchers] = await Promise.all([
       $axios.get('/api/watch/watched', {
         params: {
-          userId: params.userId
-        }
+          userId: params.userId,
+        },
       }),
-      $axios.get('/api/users/' + params.userId + '/recentwatchers')
+      $axios.get('/api/users/' + params.userId + '/recentwatchers'),
     ])
 
     const activeTab = query.tab || defaultTab
@@ -136,7 +131,7 @@ export default {
       watched: watched.watched,
       userWatchers,
       recentTopics,
-      recentArticles
+      recentArticles,
     }
   },
   data() {
@@ -149,7 +144,7 @@ export default {
     isOwner() {
       const current = this.$store.state.auth.currentUser
       return this.user && current && this.user.id === current.id
-    }
+    },
   },
   methods: {
     async watch(user) {
@@ -157,8 +152,8 @@ export default {
         if (this.watched) {
           await this.$axios.delete('/api/watch/delete', {
             params: {
-              userId: user.id
-            }
+              userId: user.id,
+            },
           })
           this.watched = false
           user.watchCount--
@@ -185,21 +180,21 @@ export default {
               text: '去登录',
               onClick: (e, toastObject) => {
                 utils.toSignin()
-              }
-            }
+              },
+            },
           })
         } else {
           user.watched = true
           this.$toast.error(e.message || e)
         }
       }
-    }
+    },
   },
   head() {
     return {
-      title: this.$siteTitle(this.user.username)
+      title: this.$siteTitle(this.user.username),
     }
-  }
+  },
 }
 </script>
 
