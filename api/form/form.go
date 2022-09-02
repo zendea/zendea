@@ -8,7 +8,7 @@ import (
 )
 
 func FormValueInt(ctx *gin.Context, name string) (int, error) {
-	str := ctx.PostForm(name)
+	str := ctx.Request.FormValue(name)
 	if str == "" {
 		return 0, errors.New(fmt.Sprintf("unable to find param value '%s'", name))
 	}
@@ -23,7 +23,7 @@ func FormValueIntDefault(ctx *gin.Context, name string, def int) int {
 }
 
 func FormValueInt64(ctx *gin.Context, name string) (int64, error) {
-	str := ctx.PostForm(name)
+	str := ctx.Request.FormValue(name)
 	if str == "" {
 		return 0, errors.New(fmt.Sprintf("unable to find param value '%s'", name))
 	}
