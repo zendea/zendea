@@ -45,12 +45,6 @@ type ArticleResponse struct {
 	Toc     template.HTML `json:"toc"`
 }
 
-type SectionResponse struct {
-	SectionId int64           `json:"sectionId"`
-	Name      string          `json:"name"`
-	Nodes     *[]NodeResponse `json:"nodes"`
-}
-
 type NodeResponse struct {
 	NodeId      int64  `json:"nodeId"`
 	Name        string `json:"name"`

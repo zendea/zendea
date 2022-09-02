@@ -46,7 +46,6 @@ func (s *nodeService) Update(dto form.NodeUpdateForm) error {
 	err := dao.NodeDao.Updates(dto.ID, map[string]interface{}{
 		"name":        dto.Name,
 		"description": dto.Description,
-		"section_id":  dto.SectionID,
 		"sort_no":     dto.SortNo,
 		"status":      dto.Status,
 		"update_time": util.NowTimestamp(),
