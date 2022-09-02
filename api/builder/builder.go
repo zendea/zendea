@@ -184,31 +184,6 @@ func BuildSimpleArticles(articles []model.Article) []model.ArticleSimpleResponse
 	return responses
 }
 
-func BuildSection(section *model.Section) *model.SectionResponse {
-	if section == nil {
-		return nil
-	}
-	rsp := &model.SectionResponse{}
-	rsp.SectionId = section.ID
-	rsp.Name = section.Name
-
-	nodes := cache.SectionCache.GetSectionNodes(section.ID)
-	rsp.Nodes = BuildNodes(nodes)
-
-	return rsp
-}
-
-func BuildSections(sections []model.Section) *[]model.SectionResponse {
-	if len(sections) == 0 {
-		return nil
-	}
-	var ret []model.SectionResponse
-	for _, section := range sections {
-		ret = append(ret, *BuildSection(&section))
-	}
-	return &ret
-}
-
 func BuildNode(node *model.Node) *model.NodeResponse {
 	if node == nil {
 		return nil

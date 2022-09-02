@@ -4,7 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"strconv"
 
-	"zendea/cache"
 	"zendea/controller"
 	"zendea/form"
 	"zendea/service"
@@ -85,23 +84,18 @@ func (c *NodeController) List(ctx *gin.Context) {
 	limit := form.FormValueIntDefault(ctx, "limit", 20)
 	id := ctx.Request.FormValue("id")
 	name := ctx.Request.FormValue("name")
-	sectionId := ctx.Request.FormValue("sectionId")
 
 	conditions := sqlcnd.NewSqlCnd()
 	if len(id) > 0 {
 		conditions.Eq("id", id)
 	}
-	if len(sectionId) > 0 {
-		conditions.Eq("section_id", sectionId)
-	}
 	if len(name) > 0 {
 		conditions.Like("name", name)
 	}
-	list, paging := service.NodeService.List(conditions.Page(page, limit).Asc("section_id").Asc("sort_no"))
+	list, paging := service.NodeService.List(conditions.Page(page, limit).Asc("sort_no"))
 	var results []map[string]interface{}
 	for _, node := range list {
 		item := util.StructToMap(node)
-		item["section"] = cache.SectionCache.Get(node.SectionID)
 		results = append(results, item)
 	}
 

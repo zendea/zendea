@@ -49,10 +49,6 @@ func Setup(e *gin.Engine, cors bool) {
 	configController := &controller.ConfigController{}
 	api.GET("/config/configs", configController.List)
 
-	// Sections
-	sectionController := &controller.SectionController{}
-	api.GET("/sections", sectionController.List)
-
 	// Nodes
 	nodeController := &controller.NodeController{}
 	api.GET("/nodes", nodeController.List)
@@ -166,15 +162,6 @@ func Setup(e *gin.Engine, cors bool) {
 	// Dashboard
 	dashboardController := &admin.DashboardController{}
 	adminAPI.GET("/dashboard/systeminfo", dashboardController.Systeminfo)
-
-	// Section
-	adminSectionController := &admin.SectionController{}
-	adminAPI.GET("/sections", adminSectionController.List)
-	adminAPI.GET("/sections/:id", adminSectionController.Show)
-	adminAPI.POST("/sections", adminSectionController.Store)
-	adminAPI.PUT("/sections/:id", adminSectionController.Update)
-	adminAPI.DELETE("/sections/:id", adminSectionController.Delete)
-	adminAPI.GET("/sections/:id/nodes", adminSectionController.Nodes)
 
 	// Node
 	adminNodeController := &admin.NodeController{}

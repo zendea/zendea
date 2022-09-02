@@ -32,7 +32,6 @@ func (s *nodeService) Create(dto form.NodeCreateForm) (*model.Node, error) {
 	node := &model.Node{
 		Name:        dto.Name,
 		Description: dto.Description,
-		SectionID: 	 dto.SectionID,
 		SortNo:      dto.SortNo,
 		Status:      dto.Status,
 		CreateTime:  util.NowTimestamp(),

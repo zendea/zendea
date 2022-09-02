@@ -3,17 +3,6 @@
     <div class="toolbar">
       <el-form :inline="true" :model="filters">
         <el-form-item>
-          <el-select v-model="filters.sectionId">
-            <el-option key="" label="全部" value="" />
-            <el-option
-              v-for="item in sections.results"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item>
           <el-input v-model="filters.id" placeholder="编号"></el-input>
         </el-form-item>
         <el-form-item>
@@ -34,7 +23,7 @@
       @selection-change="handleSelectionChange"
       highlight-current-row
       border
-      style="width: 100%;"
+      style="width: 100%"
     >
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="id" label="编号"></el-table-column>
@@ -46,7 +35,6 @@
           scope.row.status === 0 ? '启用' : '禁用'
         }}</template>
       </el-table-column>
-      <el-table-column prop="section.name" label="分类"></el-table-column>
       <el-table-column prop="createTime" label="创建时间">
         <template slot-scope="scope">{{
           scope.row.createTime | formatDate
@@ -94,21 +82,6 @@
         <el-form-item label="排序">
           <el-input v-model="addForm.sortNo"></el-input>
         </el-form-item>
-        <el-form-item label="所属分类">
-          <el-select
-            v-model="addForm.sectionId"
-            style="width:100%"
-            placeholder="节点所属分类"
-          >
-            <el-option
-              v-for="section in sections.results"
-              :key="section.id"
-              :label="section.name"
-              :value="section.id"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click.native="addFormVisible = false">取消</el-button>
@@ -141,21 +114,6 @@
         <el-form-item label="排序">
           <el-input v-model="editForm.sortNo"></el-input>
         </el-form-item>
-        <el-form-item label="所属分类">
-          <el-select
-            v-model="editForm.sectionId"
-            style="width:100%"
-            placeholder="节点所属分类"
-          >
-            <el-option
-              v-for="section in sections.results"
-              :key="section.id"
-              :label="section.name"
-              :value="section.id"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
         <el-form-item label="状态">
           <el-select
             v-model="editForm.status"
@@ -183,12 +141,6 @@
 <script>
 export default {
   layout: 'admin',
-  async asyncData({ $axios, params }) {
-    const [sections] = await Promise.all([$axios.get('/api/admin/sections')])
-    return {
-      sections
-    }
-  },
   data() {
     return {
       results: [],
@@ -196,15 +148,13 @@ export default {
       page: {},
       filters: {},
       selectedRows: [],
-      sections: [],
 
       addForm: {
         name: '',
         description: '',
         status: '',
         sortNo: '',
-        sectionId: '',
-        createTime: ''
+        createTime: '',
       },
       addFormVisible: false,
       addLoading: false,
@@ -215,11 +165,10 @@ export default {
         description: '',
         status: '',
         sortNo: '',
-        sectionId: '',
-        createTime: ''
+        createTime: '',
       },
       editFormVisible: false,
-      editLoading: false
+      editLoading: false,
     }
   },
   mounted() {
@@ -232,7 +181,7 @@ export default {
       const params = {}
       params.params = Object.assign(me.filters, {
         page: me.page.page,
-        limit: me.page.limit
+        limit: me.page.limit,
       })
       this.$axios
         .get('/api/admin/nodes', params)
@@ -255,7 +204,7 @@ export default {
     handleAdd() {
       this.addForm = {
         name: '',
-        description: ''
+        description: '',
       }
       this.addFormVisible = true
     },
@@ -300,8 +249,8 @@ export default {
 
     handleSelectionChange(val) {
       this.selectedRows = val
-    }
-  }
+    },
+  },
 }
 </script>
 

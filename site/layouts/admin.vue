@@ -41,14 +41,6 @@
               <span>控制台</span>
             </a>
             <a
-              :class="{ 'is-active': $route.path == '/admin/sections' }"
-              class="navbar-item"
-              href="/admin/sections"
-            >
-              <i class="iconfont icon-section"></i>
-              <span>分类</span>
-            </a>
-            <a
               :class="{ 'is-active': $route.path == '/admin/nodes' }"
               class="navbar-item"
               href="/admin/nodes"
@@ -141,19 +133,19 @@ export default {
   middleware: ['authenticated'],
   data() {
     return {
-      navbarActive: false
+      navbarActive: false,
     }
   },
   methods: {
     toggleNav() {
       this.navbarActive = !this.navbarActive
-    }
+    },
   },
   head() {
     return {
-      title: '后台管理'
+      title: '后台管理',
     }
-  }
+  },
 }
 </script>
 
