@@ -7,7 +7,7 @@
           <a href="/tags">标签</a>
         </p>
         <p>
-          © 2020-2021 Powered by
+          © 2020-2022 Powered by
           <a href="http://zendea.com" target="_blank" class="light">
             {{ appName }}
           </a>
@@ -28,8 +28,8 @@ export default {
     },
     appVersion() {
       return this.$store.state.config.appinfo.version || ''
-    }
-  }
+    },
+  },
 }
 </script>
 
