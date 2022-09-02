@@ -1,63 +1,71 @@
 <template>
-  <section class="main-container">
-    <div class="page-container">
-      <div v-if="siteIndexHtml" v-html="siteIndexHtml"></div>
-      <div class="widget">
-        <div class="widget-header">社区精华帖</div>
-        <div class="widget-content columns">
-          <div class="is-6 column">
-            <topic-list :topics="topics.even" :in-home="true" />
-          </div>
-          <div class="is-6 column">
-            <topic-list :topics="topics.odd" :in-home="true" />
-          </div>
-        </div>
-        <div class="widget-footer">
-          <a href="/topics/excellent">查看更多精华帖...</a>
+  <section class="main">
+    <div class="container main-container left-main">
+      <div class="left-container">
+        <div class="main-content">
+          <topics-nav />
+          <topic-list :topics="topicsPage.results" :show-ad="true" />
+          <pagination :page="topicsPage.page" url-prefix="/topics?p=" />
         </div>
       </div>
-      <index-sections :sections="sections" />
+      <topic-side :score-rank="scoreRank" :links="links" />
     </div>
   </section>
 </template>
 
 <script>
+import TopicSide from '~/components/TopicSide'
+import TopicsNav from '~/components/TopicsNav'
 import TopicList from '~/components/TopicList'
-import IndexSections from '~/components/IndexSections'
+import Pagination from '~/components/Pagination'
 
 export default {
   components: {
+    TopicSide,
+    TopicsNav,
     TopicList,
-    IndexSections
+    Pagination,
   },
-  async asyncData({ $axios, params }) {
+  async asyncData({ $axios, query }) {
     try {
-      const [sections, topics] = await Promise.all([
-        $axios.get('/api/sections'),
-        $axios.get('/api/topics/excellent')
+      const [topicsPage, scoreRank, links] = await Promise.all([
+        $axios.get('/api/topics', {
+          params: {
+            page: query.p || 1,
+          },
+        }),
+        $axios.get('/api/user/score/rank'),
+        $axios.get('/api/links/top'),
       ])
-      return { sections, topics }
+      return { topicsPage, scoreRank, links }
     } catch (e) {
       console.error(e)
     }
   },
-  computed: {
-    siteIndexHtml() {
-      return this.$store.state.config.setting.siteIndexHtml
-    }
+  methods: {
+    twitterCreated(data) {
+      if (this.topicsPage) {
+        if (this.topicsPage.results) {
+          this.topicsPage.results.unshift(data)
+        } else {
+          this.topicsPage.results = [data]
+        }
+      }
+    },
   },
   head() {
     return {
+      title: this.$siteTitle('社区'),
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: this.$siteDescription()
+          content: this.$siteDescription(),
         },
-        { hid: 'keywords', name: 'keywords', content: this.$siteKeywords() }
-      ]
+        { hid: 'keywords', name: 'keywords', content: this.$siteKeywords() },
+      ],
     }
-  }
+  },
 }
 </script>
 
