@@ -1,6 +1,7 @@
 package router
 
 import (
+	"net/http"
 	"github.com/appleboy/gin-jwt/v2"
 	"github.com/gin-gonic/gin"
 
@@ -13,13 +14,16 @@ var jwtAuth *jwt.GinJWTMiddleware
 var jwtOAuth *jwt.GinJWTMiddleware
 
 // Setup setup
-func Setup(e *gin.Engine, cors bool) {
+func Setup(e *gin.Engine) {
 	e.Use(
 		gin.Recovery(),
 	)
-	if cors {
-		e.Use(middleware.Cors())
-	}
+	
+	e.Use(middleware.Cors())
+
+	e.Any("/", func(ctx *gin.Context) {
+		ctx.String(http.StatusOK, "Zendea API\n")
+	})
 
 	// e.Use(middleware.CurrentUser)
 

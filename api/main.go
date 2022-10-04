@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"log"
 	"runtime"
 
 	"github.com/urfave/cli"
@@ -28,7 +29,7 @@ func main() {
 	// default configuration flags
 	defaultFlags := []cli.Flag{
 		cli.StringFlag{
-			Name:  "config, c",
+			Name:  "conf, c",
 			Value: "./app.yaml",
 			Usage: "Custom configuration file path",
 		},
@@ -40,6 +41,8 @@ func main() {
 	app.Flags = append(app.Flags, defaultFlags...)
 	app.Action = cmd.CmdWeb.Action
 
-	app.Run(os.Args)
+	if err := app.Run(os.Args); err != nil {
+		log.Fatal("Failed to start application: %v", err)
+	}
 }
 

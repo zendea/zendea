@@ -25,11 +25,16 @@ var CmdWeb = cli.Command{
 	Flags:  []cli.Flag{},
 }
 
-func runWeb(*cli.Context) {
+func runWeb(ctx *cli.Context) {
 	// do something
 
 	//1.Set up log level
-	zerolog.SetGlobalLevel(zerolog.Level(loglevel))
+	zerolog.SetGlobalLevel(zerolog.Level(0))
+
+	conf := "./app.yaml"
+	if ctx.IsSet("conf") {
+		conf = ctx.String("conf")
+	}
 
 	//2.Set up configuration
 	viper.SetConfigFile(conf)
@@ -37,6 +42,7 @@ func runWeb(*cli.Context) {
 	if err != nil {
 		log.Fatal(fmt.Sprintf("Read conf file fail: %s", err.Error()))
 	}
+
 	//Replace environment variables
 	err = viper.ReadConfig(strings.NewReader(os.ExpandEnv(string(content))))
 	if err != nil {
@@ -60,6 +66,6 @@ func runWeb(*cli.Context) {
 	middleware.InitLang()
 
 	engine := gin.Default()
-	router.Setup(engine, cors)
+	router.Setup(engine)
 	engine.Run(":" + viper.GetString("base.port"))
 }
