@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
-	"github.com/spf13/cobra"
+	"github.com/urfave/cli"
 	"github.com/spf13/viper"
 	"io/ioutil"
 	"os"
@@ -17,48 +17,17 @@ import (
 	"zendea/util/log"
 )
 
-var (
-	conf     string
-	port     string
-	loglevel uint8
-	cors     bool
-	cluster  bool
-	//StartCmd : set up restful api server
-	WebStart = &cobra.Command{
-		Use:     "web",
-		Short:   "Start zendea API server",
-		Example: "zendea web -c app.yaml",
-		PreRun: func(cmd *cobra.Command, args []string) {
-			usage()
-			setup()
-		},
-		RunE: func(cmd *cobra.Command, args []string) error {
-			return run()
-		},
-	}
-)
-
-func init() {
-	WebStart.PersistentFlags().StringVarP(&conf, "conf", "c", "./app.yaml", "Start server with provided configuration file")
-	WebStart.PersistentFlags().StringVarP(&port, "port", "p", "9527", "Tcp port server listening on")
-	WebStart.PersistentFlags().Uint8VarP(&loglevel, "loglevel", "l", 0, "Log level")
-	WebStart.PersistentFlags().BoolVarP(&cors, "cors", "x", false, "Enable cors headers")
-	WebStart.PersistentFlags().BoolVarP(&cluster, "cluster", "s", false, "cluster-alone mode or distributed mod")
+var CmdWeb = cli.Command{
+	Name:  "web",
+	Usage: "Start Zendea API",
+	Description: `A free, open-source, self-hosted forum software written in Go`,
+	Action: runWeb,
+	Flags:  []cli.Flag{},
 }
 
-func usage() {
-	usageStr := `
-███████╗███████╗███╗   ██╗██████╗ ███████╗ █████╗ 
-╚══███╔╝██╔════╝████╗  ██║██╔══██╗██╔════╝██╔══██╗
-  ███╔╝ █████╗  ██╔██╗ ██║██║  ██║█████╗  ███████║
- ███╔╝  ██╔══╝  ██║╚██╗██║██║  ██║██╔══╝  ██╔══██║
-███████╗███████╗██║ ╚████║██████╔╝███████╗██║  ██║
-╚══════╝╚══════╝╚═╝  ╚═══╝╚═════╝ ╚══════╝╚═╝  ╚═╝                                                 
-`
-	fmt.Printf("%s\n", usageStr)
-}
+func runWeb(*cli.Context) {
+	// do something
 
-func setup() {
 	//1.Set up log level
 	zerolog.SetGlobalLevel(zerolog.Level(loglevel))
 
@@ -89,10 +58,8 @@ func setup() {
 
 	//6.Initialize language
 	middleware.InitLang()
-}
 
-func run() error {
 	engine := gin.Default()
 	router.Setup(engine, cors)
-	return engine.Run(":" + viper.GetString("base.port"))
+	engine.Run(":" + viper.GetString("base.port"))
 }
