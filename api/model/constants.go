@@ -12,9 +12,6 @@ const (
 	SettingRecommendTags    = "recommendTags"    // 推荐标签
 	SettingScoreConfig      = "scoreConfig"      // 分数配置
 	SettingDefaultNodeId    = "defaultNodeId"    // 发帖默认节点
-	SettingStatUserCount    = "statUserCount"    // 发帖默认节点
-	SettingStatTopicCount   = "statTopicCount"   // 发帖默认节点
-	SettingStatCommentCount = "statCommentCount" // 发帖默认节点
 )
 
 // 图片样式

@@ -122,10 +122,6 @@ func (s *settingService) GetSetting() *model.ConfigData {
 		scoreConfigStr   = cache.SettingCache.GetValue(model.SettingScoreConfig)
 		defaultNodeIdStr = cache.SettingCache.GetValue(model.SettingDefaultNodeId)
 		siteIndexHtml    = cache.SettingCache.GetValue(model.SettingSiteIndexHtml)
-
-		statUserCountStr    = cache.SettingCache.GetValue(model.SettingStatUserCount)
-		statTopicCountStr   = cache.SettingCache.GetValue(model.SettingStatTopicCount)
-		statCommentCountStr = cache.SettingCache.GetValue(model.SettingStatCommentCount)
 	)
 
 	var siteKeywordsArr []string
@@ -154,9 +150,6 @@ func (s *settingService) GetSetting() *model.ConfigData {
 	}
 
 	var defaultNodeId, _ = strconv.ParseInt(defaultNodeIdStr, 10, 64)
-	var statUserCount, _ = strconv.ParseInt(statUserCountStr, 10, 64)
-	var statTopicCount, _ = strconv.ParseInt(statTopicCountStr, 10, 64)
-	var statCommentCount, _ = strconv.ParseInt(statCommentCountStr, 10, 64)
 
 	return &model.ConfigData{
 		SiteTitle:        siteTitle,
@@ -169,8 +162,5 @@ func (s *settingService) GetSetting() *model.ConfigData {
 		RecommendTags:    recommendTagsArr,
 		ScoreConfig:      scoreConfig,
 		DefaultNodeId:    defaultNodeId,
-		StatUserCount:    statUserCount,
-		StatTopicCount:   statTopicCount,
-		StatCommentCount: statCommentCount,
 	}
 }

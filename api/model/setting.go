@@ -41,9 +41,6 @@ type ConfigData struct {
 	RecommendTags    []string    `json:"recommendTags"`
 	ScoreConfig      ScoreConfig `json:"scoreConfig"`
 	DefaultNodeId    int64       `json:"defaultNodeId"`
-	StatUserCount    int64       `json:"statUserCount"`
-	StatTopicCount   int64       `json:"statTopicCount"`
-	StatCommentCount int64       `json:"statCommentCount"`
 }
 
 type AppData struct {

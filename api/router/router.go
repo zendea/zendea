@@ -34,6 +34,8 @@ func Setup(e *gin.Engine) {
 	//################################
 	api := e.Group("/api")
 
+	api.Any("/stat", new(controller.SiteController).Stat)
+
 	// JWT
 	jwtAuth = middleware.JwtAuth(middleware.LoginStandard)
 	api.POST("/auth/login", jwtAuth.LoginHandler)

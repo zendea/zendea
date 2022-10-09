@@ -10,9 +10,7 @@
       <div class="widget-content">
         <ul class="score-rank">
           <li v-for="user in scoreRank" :key="user.id">
-            <a :href="'/user/' + user.id" class="score-user-avatar">
-              avatar
-            </a>
+            <a :href="'/user/' + user.id" class="score-user-avatar">avatar</a>
             <div class="score-user-info">
               <a :href="'/user/' + user.id">{{ user.username }}</a>
               <p>{{ user.topicCount }} 帖子 • {{ user.commentCount }} 评论</p>
@@ -53,24 +51,7 @@
         </ul>
       </div>
     </div>
-    <div class="widget">
-      <div class="widget-header">
-        <span class="widget-title">统计信息</span>
-      </div>
-      <div class="widget-content">
-        <ul class="list-group">
-          <li class="list-group-item">
-            社区会员: {{ this.$statUserCount() }} 人
-          </li>
-          <li class="list-group-item">
-            帖子数: {{ this.$statTopicCount() }} 个
-          </li>
-          <li class="list-group-item">
-            回帖数: {{ this.$statCommentCount() }} 条
-          </li>
-        </ul>
-      </div>
-    </div>
+    <site-stat :stat="stat" />
   </div>
 </template>
 
@@ -78,31 +59,39 @@
 import PostBtnSidebar from '~/components/PostBtnSidebar'
 import SiteNotice from '~/components/SiteNotice'
 import SiteTip from '~/components/SiteTip'
+import SiteStat from '~/components/SiteStat'
 
 export default {
   components: {
     PostBtnSidebar,
     SiteNotice,
-    SiteTip
+    SiteTip,
+    SiteStat,
   },
   props: {
     currentNodeId: {
       type: Number,
-      default: 0
+      default: 0,
     },
     links: {
       type: Array,
       default() {
         return null
-      }
+      },
+    },
+    stat: {
+      type: Object,
+      default() {
+        return {}
+      },
     },
     scoreRank: {
       type: Array,
       default() {
         return null
-      }
-    }
-  }
+      },
+    },
+  },
 }
 </script>
 
