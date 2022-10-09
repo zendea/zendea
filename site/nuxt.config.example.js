@@ -1,6 +1,13 @@
+const isProduction = process.env.NODE_ENV === 'production'
+const isDocker = process.env.NODE_ENV === 'docker'
+
 export default {
   server: {
-    port: 3000,
+    port: isProduction
+      ? 3000
+      : isDocker
+      ? 3000
+      : 4000,
     host: '0.0.0.0',
     timing: {
       total: true
@@ -100,7 +107,11 @@ export default {
   },
 
   proxy: {
-    '/api/': 'http://dev.zendea.com:8082'
+    '/api/': isProduction
+      ? 'https://zendea.com'
+      : isDocker
+      ? 'http://zendea-api:9527'
+      : 'http://127.0.0.1:9527',
   },
 
   // Doc: https://github.com/shakee93/vue-toasted
