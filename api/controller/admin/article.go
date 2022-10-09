@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"zendea/builder"
+	"zendea/convert"
 	"zendea/cache"
 	"zendea/controller"
 	"zendea/form"
@@ -86,7 +86,7 @@ func (c *ArticleController) List(ctx *gin.Context) {
 	var results []map[string]interface{}
 	for _, article := range list {
 		item := util.StructToMap(article, "content")
-		item["user"] = builder.BuildUserDefaultIfNull(article.UserId)
+		item["user"] = convert.ToUserDefaultIfNull(article.UserId)
 
 		// 简介
 		if article.ContentType == model.ContentTypeMarkdown {
@@ -105,7 +105,7 @@ func (c *ArticleController) List(ctx *gin.Context) {
 		// 标签
 		tagIds := cache.ArticleTagCache.Get(article.ID)
 		tags := cache.TagCache.GetList(tagIds)
-		item["tags"] = builder.BuildTags(tags)
+		item["tags"] = convert.ToTags(tags)
 
 		results = append(results, item)
 	}

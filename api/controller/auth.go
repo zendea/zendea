@@ -4,7 +4,7 @@ import (
 	"github.com/dchest/captcha"
 	"github.com/gin-gonic/gin"
 
-	"zendea/builder"
+	"zendea/convert"
 	"zendea/form"
 	"zendea/service"
 	"zendea/util"
@@ -31,7 +31,7 @@ func (c *AuthController) Signup(ctx *gin.Context) {
 			return
 		}
 		c.Success(ctx, gin.H{
-			"user": builder.BuildUser(user),
+			"user": convert.ToUser(user),
 			"ref":  ref,
 		})
 	}

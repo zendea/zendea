@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"strconv"
 
-	"zendea/builder"
+	"zendea/convert"
 	"zendea/form"
 	"zendea/model"
 	"zendea/service"
@@ -25,7 +25,7 @@ func (c *ArticleController) Show(ctx *gin.Context) {
 			c.Fail(ctx, util.ErrorArticleNotFound)
 			return
 		}
-		c.Success(ctx, builder.BuildArticle(article))
+		c.Success(ctx, convert.ToArticle(article))
 	}
 }
 
@@ -44,7 +44,7 @@ func (c *ArticleController) Store(ctx *gin.Context) {
 			c.Fail(ctx, util.FromError(err))
 			return
 		}
-		c.Success(ctx, builder.BuildArticle(article))
+		c.Success(ctx, convert.ToArticle(article))
 	}
 }
 
@@ -136,7 +136,7 @@ func (c *ArticleController) List(ctx *gin.Context) {
 	cursor := form.FormValueInt64Default(ctx, "cursor", 0)
 	articles, cursor := service.ArticleService.GetArticles(cursor)
 	c.Success(ctx, gin.H{
-		"results": builder.BuildSimpleArticles(articles),
+		"results": convert.ToSimpleArticles(articles),
 		"cursor":  strconv.FormatInt(cursor, 10),
 	})
 }
@@ -148,7 +148,7 @@ func (c *ArticleController) GetTagArticles(ctx *gin.Context) {
 		cursor := form.FormValueInt64Default(ctx, "cursor", 0)
 		articles, cursor := service.ArticleService.GetTagArticles(gDto.ID, cursor)
 		c.Success(ctx, gin.H{
-			"results": builder.BuildSimpleArticles(articles),
+			"results": convert.ToSimpleArticles(articles),
 			"cusor":   strconv.FormatInt(cursor, 10),
 		})
 	}
@@ -160,7 +160,7 @@ func (c *ArticleController) GetUserRecent(ctx *gin.Context) {
 	if c.BindAndValidate(ctx, &gDto) {
 		articles := service.ArticleService.Find(sqlcnd.NewSqlCnd().Where("user_id = ? and status = ?",
 			gDto.ID, model.StatusOk).Desc("id").Limit(10))
-		c.Success(ctx, builder.BuildSimpleArticles(articles))
+		c.Success(ctx, convert.ToSimpleArticles(articles))
 	}
 }
 
@@ -175,7 +175,7 @@ func (c *ArticleController) GetUserArticles(ctx *gin.Context) {
 			Page(page, 20).Desc("id"))
 
 		c.Success(ctx, gin.H{
-			"results": builder.BuildSimpleArticles(articles),
+			"results": convert.ToSimpleArticles(articles),
 			"page":    paging,
 		})
 	}
@@ -186,7 +186,7 @@ func (c *ArticleController) GetUserNewestBy(ctx *gin.Context) {
 	var gDto form.GeneralGetDto
 	if c.BindAndValidate(ctx, &gDto) {
 		newestArticles := service.ArticleService.GetUserNewestArticles(gDto.ID)
-		c.Success(ctx, builder.BuildSimpleArticles(newestArticles))
+		c.Success(ctx, convert.ToSimpleArticles(newestArticles))
 	}
 }
 
@@ -195,7 +195,7 @@ func (c *ArticleController) GetRelatedBy(ctx *gin.Context) {
 	var gDto form.GeneralGetDto
 	if c.BindAndValidate(ctx, &gDto) {
 		relatedArticles := service.ArticleService.GetRelatedArticles(gDto.ID)
-		c.Success(ctx, builder.BuildSimpleArticles(relatedArticles))
+		c.Success(ctx, convert.ToSimpleArticles(relatedArticles))
 	}
 }
 

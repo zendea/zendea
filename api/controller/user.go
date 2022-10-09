@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"strings"
 
-	"zendea/builder"
+	"zendea/convert"
 	"zendea/cache"
 	"zendea/form"
 	"zendea/model"
@@ -25,7 +25,7 @@ func (c *UserController) GetCurrent(ctx *gin.Context) {
 		"code":    200,
 		"success": true,
 		"message": "ok",
-		"data":    builder.BuildUser(user),
+		"data":    convert.ToUser(user),
 	})
 }
 
@@ -35,7 +35,7 @@ func (c *UserController) Show(ctx *gin.Context) {
 	if c.BindAndValidate(ctx, &gDto) {
 		user := cache.UserCache.Get(gDto.ID)
 		if user != nil && user.Status != model.StatusDeleted {
-			c.Success(ctx, builder.BuildUser(user))
+			c.Success(ctx, convert.ToUser(user))
 		} else {
 			c.Fail(ctx, util.NewErrorMsg("用户不存在"))
 		}
@@ -75,7 +75,7 @@ func (c *UserController) GetScoreRank(ctx *gin.Context) {
 	userScores := service.UserScoreService.Find(sqlcnd.NewSqlCnd().Desc("score").Limit(10))
 	var results []*model.UserInfo
 	for _, userScore := range userScores {
-		results = append(results, builder.BuildUserDefaultIfNull(userScore.UserId))
+		results = append(results, convert.ToUserDefaultIfNull(userScore.UserId))
 	}
 	c.Success(ctx, results)
 }
@@ -106,7 +106,7 @@ func (c *UserController) GetNotificationsRecent(ctx *gin.Context) {
 	}
 	data := make(map[string]interface{})
 	data["count"] = count
-	data["notifications"] = builder.BuildNotifications(notifications)
+	data["notifications"] = convert.ToNotifications(notifications)
 	c.Success(ctx, data)
 }
 
@@ -123,7 +123,7 @@ func (c *UserController) GetNotifications(ctx *gin.Context) {
 	service.NotificationService.MarkRead(user.ID)
 
 	c.Success(ctx, gin.H{
-		"results": builder.BuildNotifications(messages),
+		"results": convert.ToNotifications(messages),
 		"paging":  paging,
 	})
 }
@@ -147,7 +147,7 @@ func (c *UserController) GetFavorites(ctx *gin.Context) {
 	}
 
 	c.Success(ctx, gin.H{
-		"results": builder.BuildFavorites(favorites),
+		"results": convert.ToFavorites(favorites),
 		"cursor":  cursor,
 	})
 }
@@ -159,7 +159,7 @@ func (c *UserController) GetRecentWatchers(ctx *gin.Context) {
 		userWatchers := service.UserWatchService.Recent(gDto.ID, 10)
 		var users []model.UserInfo
 		for _, userWatcher := range userWatchers {
-			userInfo := builder.BuildUserById(userWatcher.WatcherID)
+			userInfo := convert.ToUserById(userWatcher.WatcherID)
 			if userInfo != nil {
 				users = append(users, *userInfo)
 			}

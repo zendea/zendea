@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"strconv"
 
-	"zendea/builder"
+	"zendea/convert"
 	"zendea/controller"
 	"zendea/form"
 	"zendea/service"
@@ -46,7 +46,7 @@ func (c *UserScoreController) List(ctx *gin.Context) {
 	var results []map[string]interface{}
 	for _, userScore := range list {
 		item := util.StructToMap(userScore)
-		item["user"] = builder.BuildUserDefaultIfNull(userScore.UserId)
+		item["user"] = convert.ToUserDefaultIfNull(userScore.UserId)
 		results = append(results, item)
 	}
 

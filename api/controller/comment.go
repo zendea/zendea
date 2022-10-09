@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"strconv"
 
-	"zendea/builder"
+	"zendea/convert"
 	"zendea/form"
 	"zendea/service"
 	"zendea/util"
@@ -26,7 +26,7 @@ func (c *CommentController) Create(ctx *gin.Context) {
 			c.Fail(ctx, util.FromError(err))
 			return
 		}
-		c.Success(ctx, builder.BuildComment(*comment))
+		c.Success(ctx, convert.ToComment(*comment))
 	}
 }
 
@@ -55,7 +55,7 @@ func (c *CommentController) List(ctx *gin.Context) {
 	comments, cursor := service.CommentService.GetComments(entityType, entityId, cursor)
 
 	data := make(map[string]interface{})
-	data["results"] = builder.BuildComments(comments)
+	data["results"] = convert.ToComments(comments)
 	data["cursor"] = strconv.FormatInt(cursor, 10)
 	c.Success(ctx, data)
 }

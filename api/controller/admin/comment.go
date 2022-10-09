@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"strconv"
 
-	"zendea/builder"
+	"zendea/convert"
 	"zendea/controller"
 	"zendea/form"
 	"zendea/service"
@@ -93,7 +93,7 @@ func (c *CommentController) List(ctx *gin.Context) {
 	var results []map[string]interface{}
 	for _, comment := range list {
 		result := util.StructToMap(comment, "content")
-		result["user"] = builder.BuildUserDefaultIfNull(comment.UserId)
+		result["user"] = convert.ToUserDefaultIfNull(comment.UserId)
 		mr := markdown.NewMd().Run(comment.Content)
 		result["content"] = mr.ContentHtml
 		results = append(results, result)

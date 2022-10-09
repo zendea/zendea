@@ -3,7 +3,7 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 
-	"zendea/builder"
+	"zendea/convert"
 	"zendea/cache"
 	"zendea/form"
 	"zendea/model"
@@ -25,7 +25,7 @@ func (c *TagController) Show(ctx *gin.Context) {
 			c.Fail(ctx, util.ErrorTagNotFound)
 			return
 		}
-		c.Success(ctx, builder.BuildTag(tag))
+		c.Success(ctx, convert.ToTag(tag))
 	}
 }
 
@@ -38,7 +38,7 @@ func (c *TagController) List(ctx *gin.Context) {
 		Page(page, 200).Desc("id"))
 
 	data := map[string]interface{}{}
-	data["results"] = builder.BuildTags(tags)
+	data["results"] = convert.ToTags(tags)
 	data["page"] = paging
 	c.Success(ctx, data)
 }

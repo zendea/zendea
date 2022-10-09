@@ -3,7 +3,7 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 
-	"zendea/builder"
+	"zendea/convert"
 	"zendea/cache"
 	"zendea/form"
 	"zendea/model"
@@ -26,7 +26,7 @@ func (c *TopicController) Show(ctx *gin.Context) {
 			return
 		}
 		service.TopicService.IncrViewCount(topic.ID) // 增加浏览量
-		c.Success(ctx, builder.BuildTopic(topic))
+		c.Success(ctx, convert.ToTopic(topic))
 	}
 }
 
@@ -39,7 +39,7 @@ func (c *TopicController) List(ctx *gin.Context) {
 		Page(page, 20).Desc("last_comment_time"))
 
 	data := map[string]interface{}{}
-	data["results"] = builder.BuildSimpleTopics(topics)
+	data["results"] = convert.ToSimpleTopics(topics)
 	data["page"] = paging
 	c.Success(ctx, data)
 }
@@ -55,7 +55,7 @@ func (c *TopicController) Store(ctx *gin.Context) {
 			c.Fail(ctx, util.FromError(err))
 			return
 		}
-		c.Success(ctx, builder.BuildSimpleTopic(topic))
+		c.Success(ctx, convert.ToSimpleTopic(topic))
 	}
 }
 
@@ -120,7 +120,7 @@ func (c *TopicController) Update(ctx *gin.Context) {
 			c.Fail(ctx, util.FromError(err))
 			return
 		}
-		c.Success(ctx, builder.BuildSimpleTopic(topic))
+		c.Success(ctx, convert.ToSimpleTopic(topic))
 	}
 }
 
@@ -131,7 +131,7 @@ func (c *TopicController) GetRecentLikes(ctx *gin.Context) {
 		topicLikes := service.TopicLikeService.Recent(gDto.ID, 10)
 		var users []model.UserInfo
 		for _, topicLike := range topicLikes {
-			userInfo := builder.BuildUserById(topicLike.UserId)
+			userInfo := convert.ToUserById(topicLike.UserId)
 			if userInfo != nil {
 				users = append(users, *userInfo)
 			}
@@ -154,8 +154,8 @@ func (c *TopicController) GetTopicsExcellent(ctx *gin.Context) {
 	}
 
 	data := make(map[string]interface{})
-	data["odd"] = builder.BuildSimpleTopics(odd)
-	data["even"] = builder.BuildSimpleTopics(even)
+	data["odd"] = convert.ToSimpleTopics(odd)
+	data["even"] = convert.ToSimpleTopics(even)
 
 	c.Success(ctx, data)
 }
@@ -170,7 +170,7 @@ func (c *TopicController) GetTopicsRecommend(ctx *gin.Context) {
 		Page(page, 20).Desc("last_comment_time"))
 
 	data := map[string]interface{}{}
-	data["results"] = builder.BuildSimpleTopics(topics)
+	data["results"] = convert.ToSimpleTopics(topics)
 	data["page"] = paging
 	c.Success(ctx, data)
 }
@@ -184,7 +184,7 @@ func (c *TopicController) GetTopicsLast(ctx *gin.Context) {
 		Page(page, 20).Desc("id"))
 
 	data := map[string]interface{}{}
-	data["results"] = builder.BuildSimpleTopics(topics)
+	data["results"] = convert.ToSimpleTopics(topics)
 	data["page"] = paging
 	c.Success(ctx, data)
 }
@@ -199,7 +199,7 @@ func (c *TopicController) GetTopicsNoreply(ctx *gin.Context) {
 		Page(page, 20).Desc("last_comment_time"))
 
 	data := map[string]interface{}{}
-	data["results"] = builder.BuildSimpleTopics(topics)
+	data["results"] = convert.ToSimpleTopics(topics)
 	data["page"] = paging
 	c.Success(ctx, data)
 }
@@ -215,7 +215,7 @@ func (c *TopicController) GetNodeTopics(ctx *gin.Context) {
 		Page(page, 20).Desc("last_comment_time"))
 
 	data := map[string]interface{}{}
-	data["results"] = builder.BuildSimpleTopics(topics)
+	data["results"] = convert.ToSimpleTopics(topics)
 	data["page"] = paging
 
 	c.Success(ctx, data)
@@ -232,7 +232,7 @@ func (c *TopicController) GetTagTopics(ctx *gin.Context) {
 	topics, paging := service.TopicService.GetTagTopics(tagId, page)
 
 	data := map[string]interface{}{}
-	data["results"] = builder.BuildSimpleTopics(topics)
+	data["results"] = convert.ToSimpleTopics(topics)
 	data["page"] = paging
 	c.Success(ctx, data)
 }
@@ -243,7 +243,7 @@ func (c *TopicController) GetUserRecent(ctx *gin.Context) {
 	if c.BindAndValidate(ctx, &gDto) {
 		topics := service.TopicService.Find(sqlcnd.NewSqlCnd().Where("user_id = ? and status = ?",
 			gDto.ID, model.StatusOk).Desc("id").Limit(10))
-		c.Success(ctx, builder.BuildSimpleTopics(topics))
+		c.Success(ctx, convert.ToSimpleTopics(topics))
 	}
 }
 
@@ -258,7 +258,7 @@ func (c *TopicController) GetUserTopics(ctx *gin.Context) {
 			Page(page, 20).Desc("id"))
 
 		c.Success(ctx, gin.H{
-			"results": builder.BuildSimpleTopics(topics),
+			"results": convert.ToSimpleTopics(topics),
 			"page":    paging,
 		})
 	}
