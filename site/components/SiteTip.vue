@@ -15,7 +15,7 @@ export default {
     randomSiteTip() {
       const siteTips = this.$store.state.config.setting.siteTips
       if (!siteTips || siteTips.length === 0) {
-        return {}
+        return null
       }
       return siteTips[Math.floor(Math.random() * siteTips.length)]
     },
