@@ -62,7 +62,7 @@ cors:
   - DELETE
   allow_origins:
   - '*'
-  enable: false
+  enable: true
   max_age: 7200
 smtp:
   addr: smtp.qq.com

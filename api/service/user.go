@@ -171,9 +171,18 @@ func (s *userService) Create(username, email, nickname, password, rePassword str
 			return err
 		}
 
-		if err := dao.UserDao.UpdateColumn(user.ID, "avatar", avatarUrl); err != nil {
+		var updateColumns = make(map[string]interface{})
+		updateColumns["avatar"] = avatarUrl
+
+		// Auto-set admin for user whose ID is 1.
+		if user.ID == 1 {
+			updateColumns["level"] = model.UserLevelAdmin
+		}
+
+		if err := dao.UserDao.Updates(user.ID, updateColumns); err != nil {
 			return err
 		}
+
 		return nil
 	})
 
