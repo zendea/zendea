@@ -22,11 +22,6 @@ func Setup() {
 func startSchedule() {
 	c := cron.New()
 
-	// Generate Staticstic Data
-	addCronFunc(c, "@every 10m", func() {
-		service.StatisticService.GenerateData()
-	})
-
 	// Generate RSS
 	addCronFunc(c, "@every 30m", func() {
 		service.ArticleService.GenerateRss()
