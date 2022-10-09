@@ -7,6 +7,7 @@ import (
 	"zendea/dao"
 	"zendea/form"
 	"zendea/model"
+	"zendea/cache"
 	"zendea/util"
 	"zendea/util/sqlcnd"
 )
@@ -39,6 +40,7 @@ func (s *nodeService) Create(dto form.NodeCreateForm) (*model.Node, error) {
 	if err := dao.NodeDao.Create(node); err != nil {
 		return nil, errors.New("创建节点失败")
 	}
+	cache.NodeCache.InvalidateAll()
 	return node, nil
 }
 
