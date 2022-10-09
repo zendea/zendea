@@ -24,6 +24,7 @@ func main() {
 	app.Version = APP_VER
 	app.Commands = []cli.Command{
 		cmd.CmdWeb,
+		cmd.CmdMock,
 	}
 	
 	// default configuration flags

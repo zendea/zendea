@@ -171,7 +171,7 @@ func (s *userService) Create(username, email, nickname, password, rePassword str
 			return err
 		}
 
-		var updateColumns = make(map[string]interface{})
+		updateColumns := make(map[string]interface{})
 		updateColumns["avatar"] = avatarUrl
 
 		// Auto-set admin for user whose ID is 1.
