@@ -2,9 +2,9 @@
   <nav ref="nav" class="navbar" role="navigation" aria-label="main navigation">
     <div class="container">
       <div class="navbar-brand">
-        <a href="/" class="navbar-item">
+        <nuxt-link to="/" class="navbar-item">
           <i class="iconfont icon-zendea brand"></i>
-        </a>
+        </nuxt-link>
         <a
           :class="{ 'is-active': navbarActive }"
           @click="toggleNav"
@@ -114,11 +114,11 @@ import Notifier from '~/components/Notifier'
 
 export default {
   components: {
-    Notifier
+    Notifier,
   },
   data() {
     return {
-      navbarActive: false
+      navbarActive: false,
     }
   },
   computed: {
@@ -138,7 +138,7 @@ export default {
     },
     setting() {
       return this.$store.state.config.setting
-    }
+    },
   },
   methods: {
     async signout() {
@@ -153,7 +153,7 @@ export default {
           duration: 1000,
           onComplete() {
             utils.linkTo(ref)
-          }
+          },
         })
       } catch (e) {
         console.error(e)
@@ -161,8 +161,8 @@ export default {
     },
     toggleNav() {
       this.navbarActive = !this.navbarActive
-    }
-  }
+    },
+  },
 }
 </script>
 
